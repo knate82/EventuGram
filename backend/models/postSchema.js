@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 var postSchema = new Schema({
     user: {
-        type: schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User'
     },
     postImage: {
@@ -19,13 +19,15 @@ var postSchema = new Schema({
     }],
     hashtags: [String],
     comments: [{
-        user: Schema.Types.ObjectId,
-        ref: 'User',
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        },
         comment: String
     }]
 }, {timestamps: true});
 
-postSchema.methods.blobToBase64Post = function() {
+postSchema.methods.blobToBase64Post = function () {
     var postObj = this;
     postObj.postImage = postObj.postImage = 'data:' + postObj.postImage.contentType + ';base64,' + postObj.profileImage.data.toString('base64');
     return postObj;

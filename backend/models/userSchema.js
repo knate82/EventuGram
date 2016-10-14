@@ -9,10 +9,7 @@ var userSchema = new Schema({
         type: String,
         required: true
     },
-    userDisplayName: {
-        type: String,
-        required: true
-    },
+    userDisplayName: String,
     username: {
         type: String,
         unique: true,
@@ -81,6 +78,5 @@ userSchema.methods.blobToBase64Prof = function() {
     userObj.profileImage = 'data:' + userObj.contentType + ';base64,' + userObj.data.toString('base64');
     return userObj;
 };
-
 
 module.exports = mongoose.model('User', userSchema);

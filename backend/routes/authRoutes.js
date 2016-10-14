@@ -13,6 +13,7 @@ var User = require('../models/userSchema');
 authRoute.route('/signup')
     .post(function (req, res) {
         User.findOne({username: req.body.username.toLowerCase()}, function (err, existingUser) {
+
             if (err) return res.status(500).send(err);
 
             if (existingUser) {
@@ -21,11 +22,19 @@ authRoute.route('/signup')
                     message: 'This username is not available'
                 })
             } else if (!existingUser) {
-                var newUser = new User(req.body);
+                User.findOne({email: req.body.email.toLowerCase()}, function (err, existingUser) {
+                    if (err) res.status(500).send(err);
 
-                newUser.save(function (err, savedUser) {
-                    if (err) return res.status(500).send(err);
-                    res.send(savedUser);
+                    if (existingUser) {
+                        res.send({success: false, message: 'This email is already tied to an account'})
+                    } else if (!existingUser) {
+                        var newUser = new User(req.body);
+
+                        newUser.save(function (err, savedUser) {
+                            if (err) return res.status(500).send(err);
+                            res.send(savedUser);
+                        })
+                    }
                 })
             }
         })
@@ -41,7 +50,7 @@ authRoute.route('/login')
                     message: 'This user does not exist'
                 })
             } else if (user) {
-                user.comparePasswords(req.body.password, function(err, isMatch) {
+                user.comparePasswords(req.body.password, function (err, isMatch) {
                     if (err) return res.status(500).send(err);
                     if (!isMatch) {
                         res.send({

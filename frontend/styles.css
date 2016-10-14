@@ -1,0 +1,29 @@
+/*======================================
+                 NAVBAR
+======================================*/
+.md-nav-bar {
+    height: 50px;
+}
+
+.logo {
+    width: 30px;
+}
+
+.brand {
+    padding-top: 0;
+}
+
+.brand-title {
+    font-family: 'Lobster Two', cursive;
+    font-size: 1.3em;
+    color: #7F7F7F;
+}
+
+.md-nav-bar .md-button {
+    min-width: 50px !important;
+    width: 50px;
+}
+
+.md-button._md-nav-button {
+    padding: 15px 10px 5px 10px !important;
+}

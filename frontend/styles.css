@@ -27,7 +27,3 @@
 .md-button._md-nav-button {
     padding: 15px 10px 5px 10px !important;
 }
-
-md-content > div {
-    height: 100vh;
-}

@@ -6,13 +6,16 @@ angular.module("Eventugram.auth")
                 var token = TokenService.getToken();
                 if (token) {
                     config.headers = config.headers || {};
-                    config.headers.authorization = "Bearer " + token;
+                    config.headers.Authorization = "Bearer " + token;
                 }
                 return config;
             },
-            responseError: function () {
+            responseError: function (response) {
+                console.log(response)
                 if (response.status === 401) {
                     TokenService.removeToken();
+                    $location.path('/');
+                    return response;
                 }
                 $q.reject(response);
             }

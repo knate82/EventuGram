@@ -16,8 +16,8 @@ var userSchema = new Schema({
         required: true
     },
     profileImage: {
-        data: Buffer,
-        contentType: String
+        type: String,
+        default: '/assets/images/DefaultProf.png'
     },
     bio: String,
     email: {
@@ -71,12 +71,6 @@ userSchema.methods.withoutPassword = function () {
     var user = this.toObject();
     delete user.password;
     return user;
-};
-
-userSchema.methods.blobToBase64Prof = function() {
-    var userObj = this;
-    userObj.profileImage = 'data:' + userObj.contentType + ';base64,' + userObj.data.toString('base64');
-    return userObj;
 };
 
 module.exports = mongoose.model('User', userSchema);

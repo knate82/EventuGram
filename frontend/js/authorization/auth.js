@@ -1,4 +1,4 @@
-angular.module("Eventugram.auth", ["ngRoute"])
+angular.module("Eventugram.auth", [])
 
     .config(["$httpProvider", function ($httpProvider) {
         $httpProvider.interceptors.push("AuthInterceptor");

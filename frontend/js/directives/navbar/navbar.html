@@ -1,19 +1,19 @@
 <div ng-cloak>
     <md-content>
-        <md-nav-bar>
-            <div class="brand" flex-offset="5" flex-offset-gt-sm="20" layout layout-align="center center">
-                <img src="./assets/images/Logo-nobg.png" alt="" class="logo" hide-xs>
-                <span class="brand-title">Eventugram</span>
+        <md-nav-bar ng-show="userService.isLoggedIn()">
+            <div class="brand" flex-offset="5" flex-offset-gt-sm="25" layout layout-align="center center">
+                <img src="./assets/images/Logo.png" alt="" class="logo" hide-xs>
+                <span class="brand-title"><a href="#/main">Eventugram</a></span>
             </div>
-            <div layout flex-offset="20" flex-offset-gt-md="20">
+            <div layout flex-offset="15" flex-offset-gt-md="33">
                 <md-nav-item ng-hide="userService.isLoggedIn()" md-nav-href="#/login">
                     <i class="material-icons">lock_open</i>
                 </md-nav-item>
                 <md-nav-item ng-show="userService.isLoggedIn()" md-nav-href="#/profile">
-                    <i class="material-icons">people</i>
+                    <i class="material-icons">person_outline</i>
                 </md-nav-item>
                 <md-nav-item ng-show="userService.isLoggedIn()" md-nav-href="#/friends">
-                    <i class="material-icons">person_outline</i>
+                    <i class="material-icons">people</i>
                 </md-nav-item>
                 <md-nav-item ng-show="userService.isLoggedIn()" md-nav-click="userService.logout()">
                     <i class="material-icons">directions_walk</i>

@@ -1,3 +1,13 @@
+.txt-center {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+}
+
 /*======================================
                  NAVBAR
 ======================================*/
@@ -7,6 +17,7 @@
 
 .logo {
     width: 30px;
+    margin: .25em;
 }
 
 .brand {
@@ -14,7 +25,7 @@
 }
 
 .brand-title {
-    font-family: 'Lobster Two', cursive;
+    font-family: 'Raleway', cursive;
     font-size: 1.3em;
     color: #7F7F7F;
 }
@@ -28,6 +39,48 @@
     padding: 15px 10px 5px 10px !important;
 }
 
-md-content > div {
-    height: 100vh;
+/*======================================
+             Signup/Login
+======================================*/
+
+.username,
+.landing-title {
+    font-family: 'Raleway', cursive;
+    font-size: 1.8em;
+}
+
+md-input-container {
+    margin: .5em;
+}
+
+/*======================================
+             Profile
+======================================*/
+
+
+#profile {
+    background-color: #f7f7f7;
+}
+
+.thumb,
+.profile-picture {
+    border-radius: 50%;
+    object-fit: cover;
+    outline: none;
+    cursor: pointer;
+}
+
+.profile-picture {
+    height: 85px;
+    width: 85px;
+}
+
+.thumb {
+    height: 90px;
+    width: 90px;
+}
+
+.username {
+    margin-top: .5em;
+    margin-bottom: .5em;
 }

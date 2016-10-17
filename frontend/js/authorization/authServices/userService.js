@@ -1,33 +1,34 @@
 angular.module("Eventugram.auth")
 
     .service("UserService", ["$http", "TokenService", "$location", function ($http, TokenService, $location) {
-        this.loggedInUser = {};
+        var self = this;
 
         this.signup = function (userObj) {
             return $http.post("/auth/signup", userObj).then(function (response) {
-                if (response.data._id && response.data.username === userObj.username) {
+                if (response.data._id && response.data.username === userObj.username.toLowerCase()) {
                     $location.path("/login");
                 } else {
-                    alert("Problem with signup. Please try again.");
+                    return response.data;
                 }
             })
         };
 
         this.signin = function (userObj) {
             return $http.post("/auth/login", userObj).then(function (response) {
-                if (response.data.token) {
-                    this.loggedInUser = response.data.user;
-                    TokenService.saveToken(response.data.token);
-                    $location.path("/main");
-                } else {
-                    alert("Login Failed.");
+                if (response) {
+                    if (response.data.token) {
+                        TokenService.saveToken(response.data.token);
+                        $location.path("/main");
+                    } else {
+                        return response.data;
+                    }
                 }
-            })
+            });
         };
 
         this.logout = function () {
             TokenService.removeToken();
-            this.loggedInUser = {};
+            $location.path('/');
         };
 
         this.isLoggedIn = function () {

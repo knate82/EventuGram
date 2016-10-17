@@ -2,7 +2,7 @@
 
 var app = angular.module('Eventugram');
 
-app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', 'HttpService', function ($scope, UserService, DialogService, HttpService) {
+app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', 'HttpService', '$location', function ($scope, UserService, DialogService, HttpService, $location) {
     function getUserProfile() {
         HttpService.getUserProfile()
             .then(function (response) {
@@ -16,4 +16,20 @@ app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', '
                 getUserProfile();
             });
     };
+    
+    $scope.editProfile = function(){
+        $scope.editUser.username = $scope.editUser.userDisplayName;
+        
+        $scope.editUser.username = $scope.editUser.username.toLowerCase();
+        
+        HttpService.editUserProfile($scope.editUser).then(function(response){
+            if(response){
+                $scope.user = response;
+                $location.path('/profile');
+            } else {
+                alert("We can not reach the server at this time.  Please try again later.");
+            }
+        })
+    }
+    
 }]);

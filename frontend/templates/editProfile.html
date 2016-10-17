@@ -1,24 +1,28 @@
 <div layout layout-align="center start" layout-padding ng-cloak layout-fill id="profile">
     <md-content flex="100" flex-gt-sm="50">
         <p><small><a href="#/profile">cancel</a></small></p>
-        <div layout="column" layout-align="start center" layout-padding class="md-whiteframe-3dp">
+        <form name="editForm" ng-submit="editProfile()">
+            <div layout="column" layout-align="start center" layout-padding class="md-whiteframe-3dp">
 
-           <md-input-container>
-               <label for="usernameEdit">username</label>
-               <input type="text" name="username" id="usernameEdit">
-           </md-input-container>
+                <md-input-container>
+                    <label for="usernameEdit">username</label>
+                    <input type="text" name="username" id="usernameEdit" ng-model="editUser.userDisplayName" required>
+                </md-input-container>
 
-            <md-input-container>
-               <label for="emailEdit">email</label>
-               <input type="text" name="email" id="emailEdit">
-           </md-input-container>
+                <md-input-container>
+                    <label for="emailEdit">email</label>
+                    <input type="text" name="email" id="emailEdit" ng-model="editUser.email" required>
+                </md-input-container>
 
-            <md-input-container>
-               <label for="bio">bio</label>
-               <textarea type="text" name="bio" id="bioEdit"></textarea>
+                <md-input-container>
+                    <label for="bio">bio</label>
+                    <textarea type="text" name="bio" id="bioEdit" ng-click="editUser.bio" required></textarea>
 
-           </md-input-container>
+                </md-input-container>
 
-        </div>
+                <md-button class="md-raised md-accent" type="submit" ng-disabled="editForm.$invalid">Make Changes</md-button>
+
+            </div>
+        </form>
     </md-content>
 </div>

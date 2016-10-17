@@ -24,4 +24,12 @@ app.service('HttpService', ['$http', function ($http) {
                 }
             })
     }
+    
+    this.editUserProfile = function(updatedUser){
+        return $http.put('/api/user/profile', updatedUser).then(function(response){
+            console.log(response.data);
+            return response.data;
+        })
+    }
+    
 }]);

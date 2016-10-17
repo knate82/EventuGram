@@ -55,4 +55,5 @@ postRoute.route('/post/friends')
                 res.send(posts);
             })
     });
+
 module.exports = postRoute;

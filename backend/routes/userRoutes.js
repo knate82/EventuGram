@@ -77,4 +77,5 @@ userRoute.route('/profileimage/get/:id')
             res.send(image);
         });
     });
+
 module.exports = userRoute;

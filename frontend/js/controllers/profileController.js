@@ -21,6 +21,21 @@ app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', '
             });
     };
 
+    $scope.editProfile = function () {
+        $scope.editUser.username = $scope.editUser.userDisplayName;
+
+        $scope.editUser.username = $scope.editUser.username.toLowerCase();
+
+        HttpService.editUserProfile($scope.editUser).then(function (response) {
+            if (response) {
+                $scope.user = response;
+                $location.path('/profile');
+            } else {
+                alert("We can not reach the server at this time.  Please try again later.");
+            }
+        })
+    };
+    
     $scope.viewPost = function (id) {
         $location.path('/singlePost/' + id);
     }

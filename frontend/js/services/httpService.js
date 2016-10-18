@@ -78,9 +78,15 @@ app.service('HttpService', ['$http', function ($http) {
 
     this.checkFollowStatus = function (id) {
         return $http.get('/api/user/friend/' + id)
-            .then(function(response) {
+            .then(function (response) {
                 return response.data;
             })
     };
 
+    this.editUserProfile = function (updatedUser) {
+        return $http.put('/api/user/profile', updatedUser).then(function (response) {
+            console.log(response.data);
+            return response.data;
+        })
+    };
 }]);

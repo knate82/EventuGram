@@ -10,7 +10,8 @@
             <div flex="60">
                 <div layout="column" layout-align="start center">
                     <div layout="column" layout-align="center center" ng-show="notMyProfile(user._id)">
-                        <md-button class="md-raised md-accent md-hue-1" ng-click="addFriend(user._id)">{{button}}</md-button>
+                        <md-button class="md-raised md-accent md-hue-1" ng-click="addFriend(user._id)">{{button}}
+                        </md-button>
                     </div>
                     <div>
                         <p class="username">{{user.userDisplayName}}</p>
@@ -21,6 +22,7 @@
                         <span class="sub">{{user.followers.length}} followers</span>
                         <md-divider></md-divider>
                         <span class="sub">{{user.following.length}} following </span>
+
                     </div>
                     <p>{{user.bio}}</p>
                 </div>

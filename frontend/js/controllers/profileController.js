@@ -12,6 +12,7 @@ app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', '
                 console.log($scope.user)
             });
     }
+
     getUserProfile();
     $scope.openDialog = function (ev, imageUrl) {
         DialogService.changeProfileImage(ev, imageUrl)
@@ -20,7 +21,7 @@ app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', '
             });
     };
 
-    $scope.viewPost = function(id) {
+    $scope.viewPost = function (id) {
         $location.path('/singlePost/' + id);
     }
 }]);

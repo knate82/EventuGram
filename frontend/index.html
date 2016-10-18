@@ -1,40 +1,57 @@
-'<!DOCTYPE html>
-<html lang="en" ng-app="Enventugram">
+<!DOCTYPE html>
+<html lang="en" ng-app="Eventugram">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <title>Eventugram</title>
-    <!-- Angular Material CSS now available via Google CDN; version 0.9.4 used here -->
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.css">
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="./node_modules/angular-material/angular-material.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway+Dots|Raleway" rel="stylesheet">
     <!-- CUSTOMIZED CSS -->
     <link rel="stylesheet" href="styles.css">
 
 </head>
 <body>
 
+<md-content layout-fill>
+    <navbar></navbar>
     <ng-view></ng-view>
+</md-content>
 
-    <!-- DEVELOPMENT CDNS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
-    <!-- Angular Material Dependencies -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js"></script>
-    <!-- Angular Material Javascript now available via Google CDN; version 0.9.4 used here -->
-    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script> 
-    <!-- MAIN APP SCRIPT -->
-    <script src="app.js"></script>
-    <script src="authorization/auth.js"></script>
-    <!-- CONTROLLERS -->
-    
-    <!-- SERVICES -->
-    <script src="authorization/authServices/userService.js"></script>
-    <script src="authorization/authServices/tokenService.js"></script>
-    
-    <!-- FACTORIES -->
-    <script src="authorization/authFactories/authInterceptor.js"></script>
-    
+
+<script src="./node_modules/angular/angular.js"></script>
+<script src="./node_modules/angular-route/angular-route.js"></script>
+<!-- Dependencies -->
+<script src="./node_modules/angular-animate/angular-animate.js"></script>
+<script src="./node_modules/angular-aria/angular-aria.js"></script>
+<script src="./node_modules/angular-messages/angular-messages.js"></script>
+<script src="./node_modules/ng-file-upload/dist/ng-file-upload.js"></script>
+<!-- Angular Material Javascript now available via Google CDN; version 0.9.4 used here -->
+<script src="./node_modules/angular-material/angular-material.js"></script>
+<!-- MAIN APP SCRIPT -->
+<script src="app.js"></script>
+<script src="js/authorization/auth.js"></script>
+<!-- CONTROLLERS -->
+<script src="js/authorization/signup/signup.js"></script>
+<script src="js/authorization/login/login.js"></script>
+<script src="js/controllers/profileController.js"></script>
+<script src="js/controllers/mainController.js"></script>
+<script src="js/controllers/bottomSheetController/bottomSheetCtrl.js"></script>
+<script src="js/controllers/singlePostController.js"></script>
+<script src="js/controllers/userProfileController.js"></script>
+<!-- SERVICES -->
+<script src="js/authorization/authServices/userService.js"></script>
+<script src="js/authorization/authServices/tokenService.js"></script>
+<script src="js/services/httpService.js"></script>
+<script src="js/services/dialogService/dialogService.js"></script>
+<!-- DIRECTIVES -->
+<script src="js/directives/navbar/navbarDirective.js"></script>
+<!-- FACTORIES -->
+<script src="js/authorization/authFactories/authInterceptor.js"></script>
+<!-- FILTERS -->
+<script src="js/filters/howLongAgo.js"></script>
 </body>
 
 </html>

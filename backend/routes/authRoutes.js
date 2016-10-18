@@ -19,14 +19,19 @@ authRoute.route('/signup')
             if (existingUser) {
                 res.send({
                     success: false,
-                    message: 'This username is not available'
+                    message: 'This username is not available',
+                    duplicate: 'username'
                 })
             } else if (!existingUser) {
                 User.findOne({email: req.body.email.toLowerCase()}, function (err, existingUser) {
                     if (err) res.status(500).send(err);
 
                     if (existingUser) {
-                        res.send({success: false, message: 'This email is already tied to an account'})
+                        res.send({
+                            success: false,
+                            message: 'This email is already tied to an account',
+                            duplicate: 'email'
+                        })
                     } else if (!existingUser) {
                         var newUser = new User(req.body);
 
@@ -43,26 +48,28 @@ authRoute.route('/signup')
 authRoute.route('/login')
     .post(function (req, res) {
         User.findOne({username: req.body.username.toLowerCase()}, function (err, user) {
-            if (err) return res.status(500).send(err);
+            if (err) return res.status(401).send(err);
             if (!user) {
                 res.send({
                     success: false,
-                    message: 'This user does not exist'
+                    message: 'This user does not exist',
+                    field: 'username'
                 })
             } else if (user) {
                 user.comparePasswords(req.body.password, function (err, isMatch) {
-                    if (err) return res.status(500).send(err);
+                    if (err) return res.status(401).send(err);
                     if (!isMatch) {
                         res.send({
                             success: false,
-                            message: 'The password entered is incorrect'
+                            message: 'The password entered is incorrect',
+                            field: 'password'
                         })
                     } else if (isMatch) {
-                        var token = jwt.sign(user, config.secret, {expiresIn: '24h'});
+                        var token = jwt.sign(user.withoutProps('password', 'profileImageRaw'), config.secret, {expiresIn: '24h'});
 
                         res.send({
                             success: true,
-                            user: user.withoutPassword(),
+                            user: user.withoutProps('password', 'profileImageRaw'),
                             token: token,
                             message: 'Token granted'
                         })

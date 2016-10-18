@@ -1,0 +1,47 @@
+<div ng-cloak>
+    <md-content>
+        <md-nav-bar ng-show="userService.isLoggedIn()">
+            <div class="brand" flex-offset="5" flex-offset-gt-sm="20" layout layout-align="center center">
+                <a href="#/main"><img src="./assets/images/Logo.png" alt="" class="logo" hide-xs></a>
+                <span class="brand-title"><a href="#/main">Eventugram</a></span>
+            </div>
+            <div layout flex-offset="10" class="search-friends" hide-xs hide-sm>
+                <form name="searchUserForm">
+                    <md-autocomplete flex
+                                     md-require-match="true"
+                                     md-select-on-match = "true"
+                                     md-selected-item="selectedItem"
+                                     md-selected-item-change="goToProfile(item._id)"
+                                     md-search-text="searchText"
+                                     md-items="item in querySearch(searchText)"
+                                     md-item-text="item.username"
+                                     md-delay="100"
+                                     placeholder="Search users">
+                        <div layout="row" layout-align="start center">
+                            <img ng-src="{{item.profileImageRaw}}" class="avatar"/>
+
+                            <span md-highlight-text="searchText">{{item.username}}</span>
+                        </div>
+                        <md-item-template>
+                            <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.username}}</span>
+                        </md-item-template>
+                        <md-not-found>
+                            No users matching "{{searchText}}" were found.
+                        </md-not-found>
+                    </md-autocomplete>
+                </form>
+            </div>
+            <div layout flex-offset="10" flex-offset-sm="45">
+                <md-nav-item ng-show="userService.isLoggedIn()" md-nav-href="#/profile">
+                    <i class="material-icons">person_outline</i>
+                </md-nav-item>
+                <md-nav-item ng-show="userService.isLoggedIn()" md-nav-href="#/friends">
+                    <i class="material-icons">people</i>
+                </md-nav-item>
+                <md-nav-item ng-show="userService.isLoggedIn()" md-nav-click="userService.logout()">
+                    <i class="material-icons">directions_walk</i>
+                </md-nav-item>
+            </div>
+        </md-nav-bar>
+    </md-content>
+</div>

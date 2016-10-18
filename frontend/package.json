@@ -1,0 +1,24 @@
+{
+  "name": "eventugram",
+  "version": "1.0.0",
+  "description": "Social networking site",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "social",
+    "networking"
+  ],
+  "author": "Agustin Vargas and Nate Mihu",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-aria": "^1.5.8",
+    "angular-material": "^1.1.1",
+    "angular-messages": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "ng-file-upload": "^12.2.12"
+  }
+}

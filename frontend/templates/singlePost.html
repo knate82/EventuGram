@@ -1,0 +1,36 @@
+<!-- MAIN PAGE POSTS ETC -->
+
+<md-content class="md-padding" layout="column" layout-align="start center" flex-xs flex-gt-xs="50" flex-offset-gt-xs="25"
+            flex-gt-sm="40" flex-offset-gt-sm="30" flex-gt-md="30" flex-offset-gt-md="35">
+    <div flex-xs flex-gt-xs="50" layout="column">
+
+        <md-card>
+            <md-card-header layout>
+                <md-card-avatar flex="20">
+                    <img class="user-thumb" src="{{singlePost.user.profileImage}}" alt="user profile image"/>
+                </md-card-avatar>
+                <md-card-header-text layout flex="80">
+                    <span class="md-title" flex="50">{{singlePost.user.username}}</span>
+                    <span class="md-subhead" flex="50" ng-cloak>{{singlePost.createdAt | howLongAgo | date : 'h'}}h</span>
+                </md-card-header-text>
+            </md-card-header>
+            <img ng-src="{{singlePost.postImage}}" class="md-card-image" alt="Washed Out">
+            <md-button class="md-icon-button" aria-label="toggle">
+                <md-icon><i class="material-icons">favorite_border</i></md-icon>
+            </md-button>
+            </md-card-icon-actions>
+            </md-card-actions>
+            <md-card-content>
+                <p>
+                    Lorem ipsum dolor sit amet, an sed fugit sapientem necessitatibus. Eius euripidis
+                    theophrastus pri
+                    at, et omnis dolores maluisset vix. Stet appetere elaboraret ex est, ignota epicuri ex sed.
+                    Pri
+                    causae integre ocurreret ei, nobis...
+                </p>
+            </md-card-content>
+        </md-card>
+
+    </div>
+</md-content>
+

@@ -1,0 +1,45 @@
+<div layout="column" layout-align="start center" layout-padding class="sign-up">
+    <md-content class="md-whiteframe-4dp" flex-offset-gt-md="30" layout-margin>
+        <h1 class="landing-title txt-center">Eventugram</h1>
+        <h4 class="txt-center">Share photos and videos with your friends</h4>
+        <form name="signupForm" ng-submit="signin()">
+            <div layout="column">
+
+                <md-input-container>
+                    <label>username</label>
+                    <input type="text" name="username" ng-model="user.username" ng-minlength="5"
+                           ng-maxlength="15" autocomplete="off" required>
+                    <div ng-messages="signupForm.username.$error" style="color:maroon" role="alert">
+                        <div ng-message="required">Username is required</div>
+                        <div ng-message="maxlength">Username must be less than 15 characters</div>
+                    </div>
+                    <p ng-show="usernameError" style="color: firebrick; font-size: .8em;">
+                        <small>{{usernameError}}</small>
+                    </p>
+                </md-input-container>
+
+                <md-input-container>
+                    <label>password</label>
+                    <input type="password" name="password" ng-model="user.password" ng-minlength="4"
+                           ng-maxlength="12" required>
+                    <div ng-messages="signupForm.password.$error" style="color:maroon" role="alert">
+                        <div ng-message="minlength">Your password is too short</div>
+                        <div ng-message="maxlength">Your password is too long</div>
+                    </div>
+                    <p ng-show="passwordError" style="color: firebrick; font-size: .8em;">
+                        <small>{{passwordError}}</small>
+                    </p>
+                </md-input-container>
+
+                <md-button class="md-raised md-accent" type="submit" ng-disabled="signupForm.$invalid">Continue
+                </md-button>
+            </div>
+        </form>
+    </md-content>
+    <md-content class="md-whiteframe-4dp" flex-offset-gt-md="30" layout-padding>
+        <h5 class="txt-center">Don't have an account? <a href="#/">Sign Up</a></h5>
+    </md-content>
+</div>
+
+
+

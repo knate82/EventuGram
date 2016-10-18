@@ -16,9 +16,10 @@ var userSchema = new Schema({
         required: true
     },
     profileImage: {
-        data: Buffer,
-        contentType: String
+        type: String,
+        default: '/assets/images/DefaultProf.png'
     },
+    profileImageRaw: String,
     bio: String,
     email: {
         type: String,
@@ -30,7 +31,11 @@ var userSchema = new Schema({
         type: String,
         required: true
     },
-    friends: [{
+    followers: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    following: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
     }],
@@ -67,16 +72,13 @@ userSchema.methods.comparePasswords = function (passwordAttempt, callback) {
     });
 };
 
-userSchema.methods.withoutPassword = function () {
+userSchema.methods.withoutProps = function () {
     var user = this.toObject();
-    delete user.password;
-    return user;
-};
 
-userSchema.methods.blobToBase64Prof = function() {
-    var userObj = this;
-    userObj.profileImage = 'data:' + userObj.contentType + ';base64,' + userObj.data.toString('base64');
-    return userObj;
+    for (var i = 0; i < arguments.length; i++) {
+        delete user[arguments[i]];
+    }
+    return user;
 };
 
 module.exports = mongoose.model('User', userSchema);

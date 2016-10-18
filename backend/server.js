@@ -18,7 +18,7 @@ var userRoutes = require('./routes/userRoutes');
 
 // SERVER
 var app = express();
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8082;
 
 // MIDDLEWARE
 app.use(express.static(path.join(__dirname, '..', 'frontend')));
@@ -26,10 +26,9 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/api', expressJwt({secret: config.secret}));
-app.use('/upload/profileImage', multipartyMiddleWare);
 app.use('/auth', authRoutes);
-app.use('api/user', userRoutes);
-app.use('api/post', postRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/post', postRoutes);
 
 
 mongoose.connect(config.database, function () {

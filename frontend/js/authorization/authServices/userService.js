@@ -29,7 +29,7 @@ angular.module("Eventugram.auth")
 
         this.logout = function () {
             TokenService.removeToken();
-            localStorage.remove('loggedInUserId');
+            localStorage.removeItem('loggedInUserId');
             $location.path('/');
         };
 

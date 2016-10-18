@@ -6,11 +6,12 @@ var Schema = mongoose.Schema;
 var postSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     postImage: {
-        data: Buffer,
-        contentType: String
+        type: String,
+        required: true
     },
     caption: String,
     likes: [{
@@ -27,10 +28,10 @@ var postSchema = new Schema({
     }]
 }, {timestamps: true});
 
-postSchema.methods.blobToBase64Post = function () {
-    var postObj = this;
-    postObj.postImage = postObj.postImage = 'data:' + postObj.postImage.contentType + ';base64,' + postObj.profileImage.data.toString('base64');
-    return postObj;
+postSchema.methods.withoutUserPassword = function() {
+    var post = this.toObject();
+    delete post.user. password;
+    return post;
 };
 
 module.exports = mongoose.model('Post', postSchema);

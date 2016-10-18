@@ -87,8 +87,6 @@ userRoute.route('/profileimage/get/:id')
         });
     });
 
-<<<<<<< HEAD
-=======
 userRoute.route('/:id')
     .get(function (req, res) {
         if (req.params.id === undefined)
@@ -144,5 +142,4 @@ userRoute.route('/friend/add/:userId')
         })
     });
 
->>>>>>> dev
 module.exports = userRoute;

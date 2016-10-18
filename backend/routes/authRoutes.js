@@ -65,11 +65,11 @@ authRoute.route('/login')
                             field: 'password'
                         })
                     } else if (isMatch) {
-                        var token = jwt.sign(user.toObject(), config.secret, {expiresIn: '24h'});
+                        var token = jwt.sign(user.withoutProps('password', 'profileImageRaw'), config.secret, {expiresIn: '24h'});
 
                         res.send({
                             success: true,
-                            user: user.withoutPassword(),
+                            user: user.withoutProps('password', 'profileImageRaw'),
                             token: token,
                             message: 'Token granted'
                         })

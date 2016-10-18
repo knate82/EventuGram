@@ -44,13 +44,12 @@
 
                 <md-input-container>
                     <label>password</label>
-                    <input type="password" name="password" ng-model="newUser.password" ng-minlength="4"
-                           ng-maxlength="12"
-                           pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+                    <input type="password" name="password" ng-model="newUser.password" ng-minlength="8"
+                           ng-maxlength="12" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
                     <div ng-messages="signupForm.password.$error" style="color:maroon" role="alert">
                         <div ng-message="minlength">Your password is too short</div>
                         <div ng-message="maxlength">Your password is too long</div>
-                        <div ng-message="pattern">Must have atleast one number and letter</div>
+                        <div ng-message="pattern">Must have at least one number and letter</div>
                     </div>
                 </md-input-container>
 

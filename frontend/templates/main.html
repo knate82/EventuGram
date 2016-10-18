@@ -1,30 +1,45 @@
 <!-- MAIN PAGE POSTS ETC -->
 
-<md-content class="md-padding" layout-xs="column" layout="row">
+<md-content class="md-padding" layout="column" layout-align="start center">
     <div flex-xs flex-gt-xs="50" layout="column">
-        <md-card>
-            <md-card-header>
-                <md-card-avatar>
-                    <img class="md-user-avatar" src="" alt="user profile image"/>
-                </md-card-avatar>
-                <md-card-header-text>
-                    <span class="md-title">User</span>
-                    <span class="md-subhead">subhead</span>
-                </md-card-header-text>
-            </md-card-header>
-            <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
-            <md-button class="md-icon-button" aria-label="toggle">
-                <md-icon><i class="material-icons">favorite_border</i></md-icon>
-            </md-button>
-            </md-card-icon-actions>
-            </md-card-actions>
-            <md-card-content>
-                <p>
-                    Lorem ipsum dolor sit amet, an sed fugit sapientem necessitatibus. Eius euripidis theophrastus pri
-                    at, et omnis dolores maluisset vix. Stet appetere elaboraret ex est, ignota epicuri ex sed. Pri
-                    causae integre ocurreret ei, nobis...
-                </p>
-            </md-card-content>
-        </md-card>
+
+
+        <md-virtual-repeat-container id="vertical-container-posts">
+            <div md-virtual-repeat="post in posts" md-on-demand class="post" flex>
+                <md-card>
+                    <md-card-header>
+                        <md-card-avatar>
+                            <img class="md-user-avatar" src="" alt="user profile image"/>
+                        </md-card-avatar>
+                        <md-card-header-text>
+                            <span class="md-title">User</span>
+                            <span class="md-subhead">subhead</span>
+                        </md-card-header-text>
+                    </md-card-header>
+                    <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
+                    <md-button class="md-icon-button" aria-label="toggle">
+                        <md-icon><i class="material-icons">favorite_border</i></md-icon>
+                    </md-button>
+                    </md-card-icon-actions>
+                    </md-card-actions>
+                    <md-card-content>
+                        <p>
+                            Lorem ipsum dolor sit amet, an sed fugit sapientem necessitatibus. Eius euripidis
+                            theophrastus pri
+                            at, et omnis dolores maluisset vix. Stet appetere elaboraret ex est, ignota epicuri ex sed.
+                            Pri
+                            causae integre ocurreret ei, nobis...
+                        </p>
+                    </md-card-content>
+                </md-card>
+
+            </div>
+        </md-virtual-repeat-container>
+    </div>
+    <div class="menu-bar-container">
+        <md-button aria-label="menu" class="md-primary md-hue-2" md-ink-ripple="false" ng-click="showGridBottomSheet()">
+            <md-icon><i class="material-icons">more_vert</i></md-icon>
+        </md-button>
     </div>
 </md-content>
+

@@ -8,6 +8,8 @@ app.service('DialogService', ['$mdDialog', 'Upload', function ($mdDialog) {
     this.changeProfileImage = function (ev, imageUrl) {
         var template = '/js/services/dialogService/dialogTemplates/changeProfilePicture.html';
         self.data = imageUrl;
+        self.url = '/api/user/profileimage/change';
+
         return $mdDialog.show({
             controller: DialogController,
             templateUrl: template,
@@ -18,14 +20,31 @@ app.service('DialogService', ['$mdDialog', 'Upload', function ($mdDialog) {
         });
     };
 
+    this.newPost = function (ev) {
+        var template = '/js/services/dialogService/dialogTemplates/newPost.html';
+        self.url = '/api/post/newPost';
+        return $mdDialog.show({
+            controller: DialogController,
+            templateUrl: template,
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true,
+            fullscreen: false
+        });
+    };
+
     function DialogController($scope, $mdDialog, Upload) {
 
         $scope.uploadImage = function (file) {
+            var data = {};
+            if ($scope.newPost) {
+                data.caption = $scope.newPost.caption;
+            }
+            data.file = file;
+
             Upload.upload({
-                url: '/api/user/profileimage/change',
-                data: {
-                    file: file
-                }
+                url: self.url,
+                data: data
             }).then(function (response) {
                 console.log('Success ' + response.config.data.file.name + 'uploaded. Response: ' + response.data);
             }, function (response) {

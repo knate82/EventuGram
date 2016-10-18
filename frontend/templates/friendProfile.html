@@ -1,31 +1,37 @@
-<div layout layout-align="center start" layout-padding ng-cloak layout-fill id="profile">
-    <md-content flex="100" flex-gt-sm="50">
-        <p><small><a href="#/profile/edit">edit profile</a></small></p>
+<div layout="column" layout-padding ng-cloak id="profile" flex-gt-sm="50" flex-offset-gt-sm="25">
+    <div flex="100">
+        <p>
+            <small><a href="#/profile/edit">edit profile</a></small>
+        </p>
         <div layout layout-align="start center" layout-padding class="md-whiteframe-3dp">
-            <div flex="35" layout-align="start end" ng-cloak>
-                <img src="{{user.profileImage}}" alt="profile picture" ng-click="openDialog(ev, user.profileImage)"
-                     class="profile-picture" ng-show="user.profileImage">
+            <div flex="35" layout layout-align="center center" ng-cloak>
+                <img src="{{profileImage}}" alt="profile picture" class="profile-picture" ng-show="profileImage">
             </div>
             <div flex="60">
                 <div layout="column" layout-align="start center">
+                    <div layout="column" layout-align="center center" ng-show="notMyProfile(user._id)">
+                        <md-button class="md-raised md-accent md-hue-1" ng-click="addFriend(user._id)">{{button}}
+                        </md-button>
+                    </div>
                     <div>
                         <p class="username">{{user.userDisplayName}}</p>
-
                     </div>
                     <div layout>
-                        <span layout-padding>{{user.posts.length}} posts</span>
-                        <span layout-padding>{{user.friends.length}} friends</span>
+                        <span class="sub">{{user.posts.length}} posts</span>
+                        <md-divider></md-divider>
+                        <span class="sub">{{user.followers.length}} followers</span>
+                        <md-divider></md-divider>
+                        <span class="sub">{{user.following.length}} following </span>
+
                     </div>
                     <p>{{user.bio}}</p>
                 </div>
             </div>
         </div>
-        <div>
-            <md-virtual-repeat-container id="vertical-container">
-                <div md-virtual-repeat="post in posts" md-on-demand class="repeated-item" flex>
-                    {{post}}
-                </div>
-            </md-virtual-repeat-container>
+    </div>
+    <div layout layout-wrap>
+        <div ng-repeat="post in posts" class="profile-post" flex="33" ng-click="viewPost(post._id)">
+            <img ng-src="{{post.postImage}}" alt="post">
         </div>
-    </md-content>
+    </div>
 </div>

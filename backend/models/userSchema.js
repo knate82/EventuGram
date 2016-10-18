@@ -19,6 +19,7 @@ var userSchema = new Schema({
         type: String,
         default: '/assets/images/DefaultProf.png'
     },
+    profileImageRaw: String,
     bio: String,
     email: {
         type: String,
@@ -30,7 +31,11 @@ var userSchema = new Schema({
         type: String,
         required: true
     },
-    friends: [{
+    followers: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    following: [{
         type: Schema.Types.ObjectId,
         ref: 'User'
     }],
@@ -67,9 +72,12 @@ userSchema.methods.comparePasswords = function (passwordAttempt, callback) {
     });
 };
 
-userSchema.methods.withoutPassword = function () {
+userSchema.methods.withoutProps = function () {
     var user = this.toObject();
-    delete user.password;
+
+    for (var i = 0; i < arguments.length; i++) {
+        delete user[arguments[i]];
+    }
     return user;
 };
 

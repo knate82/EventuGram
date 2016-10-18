@@ -27,8 +27,13 @@ app.config(function ($routeProvider) {
         .when("/friends", {
             templateUrl: "./templates/friends.html"
         })
-        .when("/:friendId", {
-            templateUrl: "./templates/friendProfile.html"
+        .when("/user/:userId", {
+            templateUrl: "./templates/friendProfile.html",
+            controller: "UserProfileController"
+        })
+        .when("/singlePost/:postId", {
+            templateUrl: "./templates/singlePost.html",
+            controller: "SinglePostController"
         })
         .otherwise("/");
 });

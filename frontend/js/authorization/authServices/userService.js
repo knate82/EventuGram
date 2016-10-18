@@ -18,6 +18,7 @@ angular.module("Eventugram.auth")
                 if (response) {
                     if (response.data.token) {
                         TokenService.saveToken(response.data.token);
+                        localStorage['loggedInUserId'] = response.data.user._id;
                         $location.path("/main");
                     } else {
                         return response.data;
@@ -28,6 +29,7 @@ angular.module("Eventugram.auth")
 
         this.logout = function () {
             TokenService.removeToken();
+            localStorage.remove('loggedInUserId');
             $location.path('/');
         };
 

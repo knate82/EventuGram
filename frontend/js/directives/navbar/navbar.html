@@ -9,7 +9,7 @@
                 <form name="searchUserForm">
                     <md-autocomplete flex
                                      md-require-match="true"
-                                     md-select-on-match = "true"
+                                     md-select-on-match="true"
                                      md-selected-item="selectedItem"
                                      md-selected-item-change="goToProfile(item._id)"
                                      md-search-text="searchText"
@@ -18,8 +18,6 @@
                                      md-delay="100"
                                      placeholder="Search users">
                         <div layout="row" layout-align="start center">
-                            <img ng-src="{{item.profileImageRaw}}" class="avatar"/>
-
                             <span md-highlight-text="searchText">{{item.username}}</span>
                         </div>
                         <md-item-template>

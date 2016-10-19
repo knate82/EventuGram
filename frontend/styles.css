@@ -7,18 +7,10 @@ a {
     outline: none;
 }
 
-.add-comment {
-    font-size: 14px;
-    box-sizing: border-box;
-    border: none;
-    outline: none;
-    background: transparent;
-    width: 100%;
-    padding: 0 15px;
-    line-height: 40px;
-    height: 40px;
-    text-align: left;
-    resize: none;
+i,
+md-icon,
+img {
+    outline: none !important;
 }
 
 /*======================================
@@ -192,6 +184,20 @@ md-input-container {
     object-position: bottom 75%;
 }
 
+.add-comment {
+    font-size: 14px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    padding: 0 15px;
+    line-height: 40px;
+    height: 40px;
+    text-align: left;
+    resize: none;
+}
+
 md-card-header {
     padding-top: .225em !important;
 }
@@ -224,13 +230,35 @@ md-card {
 }
 
 .main md-card-content {
-    padding: 0 1em .5em 1em!important;
+    padding: 0 1em .5em 1em !important;
 }
 
+.liked {
+    color: red;
+}
+
+.liked-transparent {
+    color: rgba(255, 0, 0, .5);
+}
+
+.like,
 .load,
 .comment {
     font-size: .8em;
     margin-bottom: .225em;
+}
+
+.like {
+    color: #666;
+    font-style: bold;
+}
+
+.single-post .like {
+    margin: 1em;
+}
+
+.main .like {
+    margin-left: -20px;
 }
 
 .load {
@@ -238,6 +266,45 @@ md-card {
     color: #bbb;
     font-style: bold;
 }
+
+.profile-post,
+.main md-card {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .5);
+}
+
+.overlay .likes,
+.overlay i {
+    color: rgba(255, 255, 255, .7);
+}
+
+.overlay i {
+    font-size: 1.5em;
+}
+
+.overlay .likes {
+    font-size: 1.1em;
+    margin-left: .2em;
+}
+
+.main .heart-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 30%;
+    margin: auto auto;
+    text-align: center;
+    font-size: 5em;
+}
+
 @media (min-width: 968px) {
     .menu-bar-container {
         top: 50px;

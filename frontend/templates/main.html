@@ -1,7 +1,7 @@
 <!-- MAIN PAGE POSTS ETC -->
 
 <div class="md-padding" layout="column" flex-xs flex-gt-xs="50"
-     flex-offset-gt-xs="25" flex-gt-sm="40" flex-offset-gt-sm="30" >
+     flex-offset-gt-xs="25" flex-gt-sm="40" flex-offset-gt-sm="30">
 
     <div flex-xs flex-gt-xs="50" class="main">
 
@@ -13,13 +13,22 @@
                 <md-card-header-text layout flex="80">
                     <span class="md-title" flex="50">{{post.user.username}}</span>
                     <span class="md-subhead" flex="50"
-                          ng-cloak>{{post.createdAt | howLongAgo | date : 'h'}}h</span>
+                          ng-cloak>{{post.createdAt | howLongAgo | date : 'h'}}</span>
                 </md-card-header-text>
             </md-card-header>
-            <img ng-src="{{post.postImage}}" class="md-card-image" alt="Washed Out">
-            <md-button class="md-icon-button" aria-label="toggle">
-                <md-icon><i class="material-icons">favorite_border</i></md-icon>
-            </md-button>
+            <i class="heart-overlay material-icons liked-transparent" ng-if="post.doubleClick">favorite</i>
+            <img ng-src="{{post.postImage}}" class="md-card-image" alt="post image" ng-dblclick="likePost(post, post._id, $index);">
+            <div layout layout-align="start center">
+                <md-button class="md-icon-button" aria-label="toggle" md-ink-ripple="#ff0000">
+                    <md-icon ng-click="likePost(post, post._id, $index)" ng-hide="didUserLike(post.likes)"><i
+                            class="material-icons">favorite_border</i>
+                    </md-icon>
+                    <md-icon ng-click="likePost(post, post._id, $index)" ng-show="didUserLike(post.likes)"><i
+                            class="material-icons liked">favorite</i>
+                    </md-icon>
+                </md-button>
+                <span class="like" layout-padding>{{post.likes.length}} likes</span>
+            </div>
             </md-card-icon-actions>
             </md-card-actions>
             <md-card-content>
@@ -27,9 +36,12 @@
                     {{post.caption}}
                 </p>
                 <div layout="column">
-                    <a class="load" ng-show="post.comments.length" ng-click="post.comment.showAll=!post.comment.showAll">Load All Comments</a>
-                    <span ng-repeat="comment in post.comments | limitTo: 3" ng-init="post.comment.showAll = false" ng-if="!post.comment.showAll" class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>
-                    <span ng-repeat="comment in post.comments track by $index" ng-if="post.comment.showAll" class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>
+                    <a class="load" ng-show="post.comments.length"
+                       ng-click="post.comment.showAll=!post.comment.showAll">Load All Comments</a>
+                    <span ng-repeat="comment in post.comments | limitTo: 3" ng-init="post.comment.showAll = false"
+                          ng-if="!post.comment.showAll" class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>
+                    <span ng-repeat="comment in post.comments track by $index" ng-if="post.comment.showAll"
+                          class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>
                 </div>
                 <md-divider layout-margin></md-divider>
                 <form name="commentForm" ng-submit="addComment(post, post._id, $index)" layout>

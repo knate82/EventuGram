@@ -34,5 +34,9 @@ app.service('PostService', ['$http', function ($http) {
             .then(function (response) {
                 return response.data;
             });
+    };
+
+    this.toggleLike = function (id) {
+        return $http.put('/api/post/like/' + id);
     }
 }]);

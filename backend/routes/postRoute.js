@@ -48,6 +48,10 @@ postRoute.route('/posts/:postId')
         var post = req.params.postId;
         Post.findById(post)
             .populate('user')
+            .populate({
+                path: 'comments.user',
+                model: 'User'
+            })
             .exec(function (err, post) {
                 if (err) res.status(500).send(err);
 
@@ -63,10 +67,30 @@ postRoute.route('/posts/:postId')
             post.comments.push(req.body);
             post.save(function (err, savedComment) {
                 if (err) return res.status(500).send(err);
-
-                res.send(savedComment.comments[savedComment.comments.length - 1].comment);
+                return res.send(savedComment.comments[savedComment.comments.length - 1].comment);
             })
 
+        });
+    });
+
+postRoute.route('/like/:postId')
+    .put(function (req, res) {
+        req.body.user = req.user;
+        Post.findById(req.params.postId, function (err, post) {
+            if (err) return res.status(500).send(err);
+
+            var like = req.body.user._id;
+
+            if (post.likes.indexOf(like) >= 0)
+                post.likes.remove(like);
+            else
+                post.likes.push(like);
+
+            post.save(function (err, like) {
+                if (err) return res.status(500).send(err);
+
+                res.send(like);
+            })
         })
     });
 

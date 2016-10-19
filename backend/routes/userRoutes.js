@@ -77,7 +77,6 @@ userRoute.route('/profileimage/change')
             });
         });
     });
-
 userRoute.route('/profileimage/get/:id')
     .get(function (req, res) {
         var userId = req.params.id;

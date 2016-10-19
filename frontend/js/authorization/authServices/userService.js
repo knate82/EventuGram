@@ -13,12 +13,21 @@ angular.module("Eventugram.auth")
             })
         };
 
+        this.getUsername = function() {
+            return localStorage['username'];
+        };
+
+        this.getUserId = function() {
+            return localStorage['loggedInUserId'];
+        };
+
         this.signin = function (userObj) {
             return $http.post("/auth/login", userObj).then(function (response) {
                 if (response) {
                     if (response.data.token) {
                         TokenService.saveToken(response.data.token);
                         localStorage['loggedInUserId'] = response.data.user._id;
+                        localStorage['username'] = response.data.user.username;
                         $location.path("/main");
                     } else {
                         return response.data;
@@ -29,7 +38,8 @@ angular.module("Eventugram.auth")
 
         this.logout = function () {
             TokenService.removeToken();
-            localStorage.remove('loggedInUserId');
+            localStorage.removeItem('loggedInUserId');
+            localStorage.removeItem('username');
             $location.path('/');
         };
 

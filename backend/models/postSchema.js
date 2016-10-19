@@ -28,9 +28,12 @@ var postSchema = new Schema({
     }]
 }, {timestamps: true});
 
-postSchema.methods.withoutUserPassword = function() {
+postSchema.methods.withoutProps = function () {
     var post = this.toObject();
-    delete post.user. password;
+
+    for (var i = 0; i < arguments.length; i++) {
+        delete post.user[arguments[i]];
+    }
     return post;
 };
 

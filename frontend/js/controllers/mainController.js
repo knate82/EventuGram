@@ -2,7 +2,7 @@
 
 var app = angular.module('Eventugram');
 
-app.controller('MainController', ['$scope', '$mdBottomSheet', 'PostService', 'UserService', function ($scope, $mdBottomSheet, PostService, UserService) {
+app.controller('MainController', ['$scope', '$mdBottomSheet', '$timeout', 'PostService', 'UserService', function ($scope, $mdBottomSheet, $timeout, PostService, UserService) {
     $scope.showGridBottomSheet = function () {
         $mdBottomSheet.show({
             templateUrl: '/js/controllers/bottomSheetController/bottomSheet.html',
@@ -33,5 +33,30 @@ app.controller('MainController', ['$scope', '$mdBottomSheet', 'PostService', 'Us
                 }
             });
         post.newComment = '';
+    };
+
+    $scope.likePost = function (post, id) {
+        PostService.toggleLike(id);
+
+        var liked = $scope.didUserLike(post.likes);
+        var like = UserService.getUserId();
+        if (!liked) {
+            post.likes.push(like);
+            post.doubleClick = true;
+        } else {
+            post.likes.splice(post.likes.indexOf(like));
+        }
+
+        $timeout(function () {
+            post.doubleClick = false;
+        }, 1000);
+    };
+
+    $scope.didUserLike = function (likes) {
+        var user = UserService.getUserId();
+        if (likes.indexOf(user) >= 0)
+            return true;
+        else
+            return false;
     }
 }]);

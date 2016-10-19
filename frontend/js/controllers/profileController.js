@@ -2,9 +2,9 @@
 
 var app = angular.module('Eventugram');
 
-app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', 'HttpService', '$location', function ($scope, UserService, DialogService, HttpService, $location) {
+app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', 'ProfileService', '$location', function ($scope, UserService, DialogService, ProfileService, $location) {
     function getUserProfile() {
-        HttpService.getUserProfile()
+        ProfileService.getUserProfile()
             .then(function (response) {
                 $scope.user = response;
 
@@ -26,7 +26,7 @@ app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', '
 
         $scope.editUser.username = $scope.editUser.username.toLowerCase();
 
-        HttpService.editUserProfile($scope.editUser).then(function (response) {
+        ProfileService.editUserProfile($scope.editUser).then(function (response) {
             if (response) {
                 $scope.user = response;
                 $location.path('/profile');
@@ -35,7 +35,7 @@ app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', '
             }
         })
     };
-    
+
     $scope.viewPost = function (id) {
         $location.path('/singlePost/' + id);
     }

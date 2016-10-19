@@ -15,7 +15,7 @@ postRoute.use('*', multipartyMiddleWare);
 
 postRoute.route('/newPost')
     .get(function (req, res) {
-        Post.find(req.query, function(err, posts) {
+        Post.find(req.query, function (err, posts) {
             if (err) return res.status(500).send(err);
 
             res.send(posts);
@@ -43,7 +43,7 @@ postRoute.route('/newPost')
         });
     });
 
-postRoute.route('/:postId')
+postRoute.route('/posts/:postId')
     .get(function (req, res) {
         var post = req.params.postId;
         Post.findById(post)
@@ -51,20 +51,48 @@ postRoute.route('/:postId')
             .exec(function (err, post) {
                 if (err) res.status(500).send(err);
 
-                res.send(post.withoutUserPassword());
+                res.send(post.withoutProps('password'));
             });
+    })
+    .put(function (req, res) {
+        var post = req.params.postId;
+        req.body.user = req.user;
+        Post.findById(post, function (err, post) {
+            if (err) return res.status(500).send(err);
+
+            post.comments.push(req.body);
+            post.save(function (err, savedComment) {
+                if (err) return res.status(500).send(err);
+
+                res.send(savedComment.comments[savedComment.comments.length - 1].comment);
+            })
+
+        })
     });
 
 postRoute.route('/friends')
     .get(function (req, res) {
         var user = req.user._id;
-        User.findById(user)
-            .populate('friends', 'posts')
-            .exec(function (err, posts) {
-                if (err) return res.status(500).send(err);
-
-                res.send(posts);
-            })
+        User.findById(user, function (err, foundUser) {
+            if (err) return res.status(500).send(err);
+            if (foundUser.following.length) {
+                Post.find({user: {$in: [foundUser.following, user]}})
+                    .sort({'createdAt': -1})
+                    .populate({
+                        path: 'user',
+                        select: 'username profileImageRaw'
+                    })
+                    .populate({
+                        path: 'comments.user',
+                        model: 'User',
+                        select: 'username'
+                    })
+                    .exec(function (err, posts) {
+                        if (err) return res.status(500).send(err);
+                        res.send(posts);
+                    })
+            }
+        })
     });
 
 module.exports = postRoute;

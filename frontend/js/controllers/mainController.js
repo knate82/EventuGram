@@ -2,8 +2,8 @@
 
 var app = angular.module('Eventugram');
 
-app.controller('MainController', ['$scope', 'HttpService', '$mdBottomSheet', function($scope, HttpService, $mdBottomSheet) {
-    $scope.showGridBottomSheet = function() {
+app.controller('MainController', ['$scope', '$mdBottomSheet', 'PostService', 'UserService', function ($scope, $mdBottomSheet, PostService, UserService) {
+    $scope.showGridBottomSheet = function () {
         $mdBottomSheet.show({
             templateUrl: '/js/controllers/bottomSheetController/bottomSheet.html',
             controller: 'BottomSheetController',
@@ -11,5 +11,27 @@ app.controller('MainController', ['$scope', 'HttpService', '$mdBottomSheet', fun
         });
     };
 
+    (function getPosts() {
+        PostService.getFollowingPosts()
+            .then(function (response) {
+                $scope.posts = response;
+                console.log(response)
+            });
+    }());
 
+    $scope.addComment = function (post, id, index) {
+        PostService.addComment(post.newComment, id)
+            .then(function (response) {
+                if (response) {
+                    var comment = {
+                        user: {
+                            username: UserService.getUsername()
+                        },
+                        comment: response
+                    };
+                    $scope.posts[index].comments.unshift(comment);
+                }
+            });
+        post.newComment = '';
+    }
 }]);

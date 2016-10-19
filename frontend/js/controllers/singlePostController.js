@@ -2,13 +2,11 @@
 
 var app = angular.module('Eventugram');
 
-app.controller('SinglePostController', ['$scope', '$routeParams', 'HttpService', function($scope, $routeParams, HttpService) {
+app.controller('SinglePostController', ['$scope', '$routeParams', 'PostService', function($scope, $routeParams, PostService) {
 
-    HttpService.getOnePost($routeParams.postId)
+    PostService.getOnePost($routeParams.postId)
         .then(function(response){
             $scope.singlePost = response;
-            console.log(response)
         })
-
 
 }]);

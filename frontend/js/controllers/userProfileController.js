@@ -2,11 +2,11 @@
 
 var app = angular.module('Eventugram');
 
-app.controller('UserProfileController', ['$scope', '$routeParams', 'HttpService', function ($scope, $routeParams, HttpService) {
-    searchUserForm.reset();
+app.controller('UserProfileController', ['$scope', '$routeParams', 'FollowerService', 'ProfileService', 'UserService', function ($scope, $routeParams, FollowerService, ProfileService, UserService) {
+
 
     $scope.getUser = function () {
-        HttpService.getOtherUsersProfile($routeParams.userId)
+        ProfileService.getOtherUsersProfile($routeParams.userId)
             .then(function (user) {
                 $scope.user = user;
                 $scope.profileImage = user.profileImageRaw || user.profileImage;
@@ -15,7 +15,7 @@ app.controller('UserProfileController', ['$scope', '$routeParams', 'HttpService'
     $scope.getUser();
 
     $scope.checkFollowStatus = function (id) {
-        HttpService.checkFollowStatus(id)
+        FollowerService.checkFollowStatus(id)
             .then(function (response) {
                 if (response.message) {
                     $scope.button = 'follow'
@@ -34,10 +34,16 @@ app.controller('UserProfileController', ['$scope', '$routeParams', 'HttpService'
         return true;
     };
 
-    $scope.addFriend = function (id) {
-        HttpService.addFriend(id)
+    $scope.toggleFollow = function (user) {
+        var loggedInUserId = UserService.getUserId();
+
+        if (user.followers.indexOf(loggedInUserId) < 0)
+            user.followers.push(loggedInUserId);
+        else
+            user.followers.splice(user.followers.indexOf(loggedInUserId), 1);
+
+        FollowerService.toggleFollow(user._id)
             .then(function (response) {
-                console.log(response)
                 if (response.code === 0)
                     $scope.button = 'following';
                 else

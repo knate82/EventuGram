@@ -1,45 +1,51 @@
 <!-- MAIN PAGE POSTS ETC -->
 
-<md-content class="md-padding" layout="column" layout-align="start center">
-    <div flex-xs flex-gt-xs="50" layout="column">
+<div class="md-padding" layout="column" flex-xs flex-gt-xs="50"
+     flex-offset-gt-xs="25" flex-gt-sm="40" flex-offset-gt-sm="30" >
 
+    <div flex-xs flex-gt-xs="50" class="main">
 
-        <md-virtual-repeat-container id="vertical-container-posts">
-            <div md-virtual-repeat="post in posts" md-on-demand class="post" flex>
-                <md-card>
-                    <md-card-header>
-                        <md-card-avatar>
-                            <img class="md-user-avatar" src="" alt="user profile image"/>
-                        </md-card-avatar>
-                        <md-card-header-text>
-                            <span class="md-title">User</span>
-                            <span class="md-subhead">subhead</span>
-                        </md-card-header-text>
-                    </md-card-header>
-                    <img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">
-                    <md-button class="md-icon-button" aria-label="toggle">
-                        <md-icon><i class="material-icons">favorite_border</i></md-icon>
-                    </md-button>
-                    </md-card-icon-actions>
-                    </md-card-actions>
-                    <md-card-content>
-                        <p>
-                            Lorem ipsum dolor sit amet, an sed fugit sapientem necessitatibus. Eius euripidis
-                            theophrastus pri
-                            at, et omnis dolores maluisset vix. Stet appetere elaboraret ex est, ignota epicuri ex sed.
-                            Pri
-                            causae integre ocurreret ei, nobis...
-                        </p>
-                    </md-card-content>
-                </md-card>
+        <md-card ng-repeat="post in posts track by $index">
+            <md-card-header layout>
+                <md-card-avatar flex="20">
+                    <img class="user-thumb" ng-src="{{post.user.profileImageRaw}}" alt="user profile image"/>
+                </md-card-avatar>
+                <md-card-header-text layout flex="80">
+                    <span class="md-title" flex="50">{{post.user.username}}</span>
+                    <span class="md-subhead" flex="50"
+                          ng-cloak>{{post.createdAt | howLongAgo | date : 'h'}}h</span>
+                </md-card-header-text>
+            </md-card-header>
+            <img ng-src="{{post.postImage}}" class="md-card-image" alt="Washed Out">
+            <md-button class="md-icon-button" aria-label="toggle">
+                <md-icon><i class="material-icons">favorite_border</i></md-icon>
+            </md-button>
+            </md-card-icon-actions>
+            </md-card-actions>
+            <md-card-content>
+                <p>
+                    {{post.caption}}
+                </p>
+                <div layout="column">
+                    <a class="load" ng-show="post.comments.length" ng-click="post.comment.showAll=!post.comment.showAll">Load All Comments</a>
+                    <span ng-repeat="comment in post.comments | limitTo: 3" ng-init="post.comment.showAll = false" ng-if="!post.comment.showAll" class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>
+                    <span ng-repeat="comment in post.comments track by $index" ng-if="post.comment.showAll" class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>
+                </div>
+                <md-divider layout-margin></md-divider>
+                <form name="commentForm" ng-submit="addComment(post, post._id, $index)" layout>
+                    <input type="text" placeholder="add a comment" ng-model="post.newComment.comment"
+                           class="add-comment">
+                    <md-button type="submit" class="md-accent md-hue-2 md-raised" hide-gt-sm>comment</md-button>
+                </form>
+            </md-card-content>
+        </md-card>
 
-            </div>
-        </md-virtual-repeat-container>
     </div>
     <div class="menu-bar-container">
-        <md-button aria-label="menu" class="md-primary md-hue-2" md-ink-ripple="false" ng-click="showGridBottomSheet()">
+        <md-button aria-label="menu" class="md-fab md-primary md-hue-2" md-ink-ripple="false"
+                   ng-click="showGridBottomSheet()">
             <md-icon><i class="material-icons">more_vert</i></md-icon>
         </md-button>
     </div>
-</md-content>
 
+</div>

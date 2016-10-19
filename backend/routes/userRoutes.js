@@ -129,15 +129,16 @@ userRoute.route('/friend/add/:userId')
                 });
 
                 user.save();
+
                 return res.send({message: 'unfollowed user', code: 1});
             } else {
                 user.following.push(req.params.userId);
-
+                user.save();
                 User.findById(req.params.userId, function (err, foundUser) {
                     foundUser.followers.push(user);
                     foundUser.save();
                 });
-                user.save();
+
                 return res.send({message: 'followed user', code: 0});
             }
         })

@@ -9,6 +9,32 @@
                     </md-button>
                 </div>
             </md-list-item>
+                <div hide-md hide-lg>
+                    <form name="searchUserFormBottom">
+                        <md-autocomplete flex
+                                         md-require-match="true"
+                                         md-select-on-match = "true"
+                                         md-selected-item="selectedItem"
+                                         md-selected-item-change="goToProfile(item._id)"
+                                         md-search-text="searchText"
+                                         md-items="item in querySearch(searchText)"
+                                         md-item-text="item.username"
+                                         md-delay="100"
+                                         placeholder="Search users">
+                            <div layout="row" layout-align="start center">
+                                <img ng-src="{{item.profileImageRaw}}" class="avatar"/>
+
+                                <span md-highlight-text="searchText">{{item.username}}</span>
+                            </div>
+                            <md-item-template>
+                                <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.username}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                                No users matching "{{searchText}}" were found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </form>
+                </div>
         </md-list>
     </div>
 </md-bottom-sheet>

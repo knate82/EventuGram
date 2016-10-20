@@ -7,7 +7,10 @@ app.controller('BottomSheetController', ['$scope', '$mdBottomSheet', '$location'
     $scope.items = [
         {
             name: 'inbox',
-            icon: 'inbox'
+            icon: 'inbox',
+            use: function() {
+                $location.path('/messages');
+            }
         },
         {
             name: 'add post',

@@ -7,13 +7,13 @@ var multipart = require('connect-multiparty');
 var multipartyMiddleWare = multipart();
 var fs = require('fs');
 
-// SCHEMA
+// MODELS
 var User = require('../models/userSchema');
 var Image = require('../models/imageSchema');
 
 userRoute.use('*', multipartyMiddleWare);
 
-userRoute.route('/getAll')
+userRoute.route('/query')
     .get(function (req, res) {
         User.find({username: {$in: [new RegExp('^' + req.query.username)]}}, function (err, users) {
             if (err) return res.status(500).send(err);
@@ -22,12 +22,12 @@ userRoute.route('/getAll')
         });
     });
 
-userRoute.route('/profile')
+userRoute.route('/userprofile')
     .get(function (req, res) {
         User.findById(req.user)
             .populate('posts')
             .exec(function (err, user) {
-                res.send(user.withoutProps('password', 'profileImageRaw'));
+                res.send(user.withoutProps('password'));
             });
     })
     .put(function (req, res) {
@@ -39,7 +39,7 @@ userRoute.route('/profile')
         });
     });
 
-userRoute.route('/profileimage/change')
+userRoute.route('/userprofile/profileimage/')
     .post(function (req, res) {
         var user = req.user._id;
 
@@ -67,9 +67,8 @@ userRoute.route('/profileimage/change')
                     if (err) return res.status(500).send(err)
                 });
 
-                foundUser.profileImage = '/profileimage/get/' + foundUser._id;
                 foundUser.profileImageRaw = 'data:' + contentType + ';base64,' + data.toString('base64');
-                ;
+
                 foundUser.save(function (err) {
                     if (err) throw err;
                     console.error('saved img to mongo');
@@ -77,30 +76,23 @@ userRoute.route('/profileimage/change')
             });
         });
     });
-userRoute.route('/profileimage/get/:id')
-    .get(function (req, res) {
-        var userId = req.params.id;
 
-        Image.findOne({user: userId}, function (err, image) {
-            if (err) return res.status(500).send(err);
-            res.send(image);
-        });
-    });
-
-userRoute.route('/:id')
+userRoute.route('/profile/:id')
     .get(function (req, res) {
         if (req.params.id === undefined)
             return res.send({message: 'id is undefined'});
 
-        User.findById(req.params.id, function (err, user) {
-            if (err) return res.status(500).send(err);
+        User.findById(req.params.id)
+            .populate('posts')
+            .exec(function (err, user) {
+                if (err) return res.status(500).send(err);
 
-            if (user)
-                res.send(user.withoutProps('password', 'email'));
-        });
+                if (user)
+                    res.send(user.withoutProps('password', 'email'));
+            });
     });
 
-userRoute.route('/friend/:id')
+userRoute.route('/following/user/:id')
     .get(function (req, res) {
         User.findById(req.user, function (err, user) {
             if (err) return res.status(500).send(err);
@@ -114,7 +106,7 @@ userRoute.route('/friend/:id')
         })
     });
 
-userRoute.route('/friend/add/:userId')
+userRoute.route('/following/add/:userId')
     .patch(function (req, res) {
         User.findById(req.user, function (err, user) {
             if (err) return res.status(500).send(err);
@@ -137,10 +129,21 @@ userRoute.route('/friend/add/:userId')
                     foundUser.followers.push(user);
                     foundUser.save();
                 });
-
                 return res.send({message: 'followed user', code: 0});
             }
         })
+    });
+
+userRoute.route('/following')
+    .get(function (req, res) {
+        var user = req.user._id;
+        User.findById(user)
+            .populate('following', 'username profileImageRaw')
+            .select('username profileImageRaw following')
+            .exec(function (err, user) {
+                if (err) return res.status(500).send(err);
+                res.send(user);
+            });
     });
 
 module.exports = userRoute;

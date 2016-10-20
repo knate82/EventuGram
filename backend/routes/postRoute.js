@@ -7,18 +7,38 @@ var multipart = require('connect-multiparty');
 var multipartyMiddleWare = multipart();
 var fs = require('fs');
 
-// SCHEMA
+// MODELS
 var User = require('../models/userSchema');
 var Post = require('../models/postSchema');
 
 postRoute.use('*', multipartyMiddleWare);
 
-postRoute.route('/newPost')
+postRoute.route('/')
     .get(function (req, res) {
-        Post.find(req.query, function (err, posts) {
+        var user = req.user._id;
+
+        User.findById(user, function (err, foundUser) {
             if (err) return res.status(500).send(err);
 
-            res.send(posts);
+            foundUser.following.push(user);
+            var query = foundUser.following.concat(user);
+
+            Post.find({user: {$in: query}})
+                .sort({'createdAt': -1})
+                .populate({
+                    path: 'user',
+                    select: 'username profileImageRaw'
+                })
+                .populate({
+                    path: 'comments.user',
+                    model: 'User',
+                    select: 'username'
+                })
+                .exec(function (err, posts) {
+                    if (err) return res.status(500).send(err);
+                    res.send(posts);
+                    console.log(posts)
+                })
         })
     })
     .post(function (req, res) {
@@ -43,7 +63,7 @@ postRoute.route('/newPost')
         });
     });
 
-postRoute.route('/posts/:postId')
+postRoute.route('/:postId')
     .get(function (req, res) {
         var post = req.params.postId;
         Post.findById(post)
@@ -58,6 +78,9 @@ postRoute.route('/posts/:postId')
                 res.send(post.withoutProps('password'));
             });
     })
+
+
+postRoute.route('/:postId/comment')
     .put(function (req, res) {
         var post = req.params.postId;
         req.body.user = req.user;
@@ -69,11 +92,10 @@ postRoute.route('/posts/:postId')
                 if (err) return res.status(500).send(err);
                 return res.send(savedComment.comments[savedComment.comments.length - 1].comment);
             })
-
         });
     });
 
-postRoute.route('/like/:postId')
+postRoute.route('/:postId/like')
     .put(function (req, res) {
         req.body.user = req.user;
         Post.findById(req.params.postId, function (err, post) {
@@ -91,31 +113,6 @@ postRoute.route('/like/:postId')
 
                 res.send(like);
             })
-        })
-    });
-
-postRoute.route('/friends')
-    .get(function (req, res) {
-        var user = req.user._id;
-        User.findById(user, function (err, foundUser) {
-            if (err) return res.status(500).send(err);
-            if (foundUser.following.length) {
-                Post.find({user: {$in: [foundUser.following, user]}})
-                    .sort({'createdAt': -1})
-                    .populate({
-                        path: 'user',
-                        select: 'username profileImageRaw'
-                    })
-                    .populate({
-                        path: 'comments.user',
-                        model: 'User',
-                        select: 'username'
-                    })
-                    .exec(function (err, posts) {
-                        if (err) return res.status(500).send(err);
-                        res.send(posts);
-                    })
-            }
         })
     });
 

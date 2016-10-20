@@ -15,6 +15,7 @@ var config = require('./config');
 var authRoutes = require('./routes/authRoutes');
 var postRoutes = require('./routes/postRoute');
 var userRoutes = require('./routes/userRoutes');
+var messageRoutes = require('./routes/messageRoute');
 
 // SERVER
 var app = express();
@@ -29,6 +30,7 @@ app.use('/api', expressJwt({secret: config.secret}));
 app.use('/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes);
+app.use('/api/message', messageRoutes);
 
 
 mongoose.connect(config.database, function () {

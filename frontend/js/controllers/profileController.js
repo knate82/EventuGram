@@ -7,9 +7,7 @@ app.controller('ProfileController', ['$scope', 'UserService', 'DialogService', '
         ProfileService.getUserProfile()
             .then(function (response) {
                 $scope.user = response;
-
                 $scope.posts = response.posts;
-                console.log($scope.user)
             });
     }
 

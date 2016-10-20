@@ -12,7 +12,7 @@ app.directive('navbar', ['UserService', '$location', function (UserService, $loc
         },
         controller: ['$scope', '$http', '$location', function ($scope, $http, $location) {
             $scope.querySearch = function (query) {
-                return $http.get("/api/user/getAll", {params: {username: query}})
+                return $http.get("/api/user/query", {params: {username: query}})
                     .then(function (response) {
                         return response.data;
                     })

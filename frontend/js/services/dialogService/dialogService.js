@@ -8,7 +8,7 @@ app.service('DialogService', ['$mdDialog', 'Upload', function ($mdDialog) {
     this.changeProfileImage = function (ev, imageUrl) {
         var template = '/js/services/dialogService/dialogTemplates/changeProfilePicture.html';
         self.data = imageUrl;
-        self.url = '/api/user/profileimage/change';
+        self.url = '/api/user/userprofile/profileimage';
 
         return $mdDialog.show({
             controller: DialogController,
@@ -22,7 +22,7 @@ app.service('DialogService', ['$mdDialog', 'Upload', function ($mdDialog) {
 
     this.newPost = function (ev) {
         var template = '/js/services/dialogService/dialogTemplates/newPost.html';
-        self.url = '/api/post/newPost';
+        self.url = '/api/post/';
         return $mdDialog.show({
             controller: DialogController,
             templateUrl: template,
@@ -52,6 +52,7 @@ app.service('DialogService', ['$mdDialog', 'Upload', function ($mdDialog) {
             }, function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 $scope.closeDialog();
+                $scope.$emit('refreshPosts');
                 console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
             });
         };

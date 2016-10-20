@@ -19,7 +19,10 @@ var userSchema = new Schema({
         type: String,
         default: '/assets/images/DefaultProf.png'
     },
-    profileImageRaw: String,
+    profileImageRaw: {
+        type: String,
+        default: '/assets/images/DefaultProf.png'
+    },
     bio: String,
     email: {
         type: String,
@@ -42,7 +45,21 @@ var userSchema = new Schema({
     posts: [{
         type: Schema.Types.ObjectId,
         ref: 'Post'
-    }]
+    }],
+    notifications: [{
+        user: {
+            type: Schema.Types.ObjectId,
+            user: 'ref'
+        },
+        notificationType: {
+            type: String,
+            enum: ['like', 'message', 'mention']
+        },
+        post: {
+            type: Schema.Types.ObjectId,
+            ref: 'Posts'
+        }
+    }, {timestamps: true}]
 }, {timestamps: true});
 
 userSchema.pre('save', function (next) {

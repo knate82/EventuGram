@@ -7,13 +7,13 @@
 
         <md-card ng-repeat="post in posts track by $index">
             <md-card-header layout>
-                <md-card-avatar flex="20">
-                    <img class="user-thumb" ng-src="{{post.user.profileImageRaw}}" alt="user profile image"/>
+                <md-card-avatar flex="20" ng-click="goToProfile(post.user._id)">
+                    <img class="user-thumb" ng-src="{{ post.user.profileImageRaw || '/assets/images/DefaultProf.png'}}" alt="user profile image"/>
                 </md-card-avatar>
                 <md-card-header-text layout flex="80">
-                    <span class="md-title" flex="50">{{post.user.username}}</span>
+                    <span class="md-title" flex="50" ng-click="goToProfile(post.user._id)">{{post.user.username}}</span>
                     <span class="md-subhead" flex="50"
-                          ng-cloak>{{post.createdAt | howLongAgo | date : 'h'}}</span>
+                          ng-cloak>{{post.createdAt | howLongAgo}}</span>
                 </md-card-header-text>
             </md-card-header>
             <i class="heart-overlay material-icons liked-transparent" ng-if="post.doubleClick">favorite</i>
@@ -36,7 +36,7 @@
                     {{post.caption}}
                 </p>
                 <div layout="column">
-                    <a class="load" ng-show="post.comments.length"
+                    <a class="load" ng-show="post.comments.length > 3"
                        ng-click="post.comment.showAll=!post.comment.showAll">Load All Comments</a>
                     <span ng-repeat="comment in post.comments | limitTo: 3" ng-init="post.comment.showAll = false"
                           ng-if="!post.comment.showAll" class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>
@@ -47,7 +47,7 @@
                 <form name="commentForm" ng-submit="addComment(post, post._id, $index)" layout>
                     <input type="text" placeholder="add a comment" ng-model="post.newComment.comment"
                            class="add-comment">
-                    <md-button type="submit" class="md-accent md-hue-2 md-raised" hide-gt-sm>comment</md-button>
+                    <md-button type="submit" class="md-accent md-hue-2 md-raised" hide-gt-sm ng-show="post.newComment.comment">comment</md-button>
                 </form>
             </md-card-content>
         </md-card>

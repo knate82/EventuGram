@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('Eventugram', ["ngRoute", "ngMaterial", "ngMessages", "Eventugram.auth", "ngFileUpload"]);
+var app = angular.module('Eventugram', ["ngRoute", "ngMaterial", "ngMessages", "Eventugram.auth", "ngFileUpload", "ngTouch"]);
 
 app.config(function ($routeProvider) {
     $routeProvider
@@ -10,11 +10,25 @@ app.config(function ($routeProvider) {
         })
         .when("/", {
             templateUrl: "./templates/signup.html",
-            controller: "SignupController"
+            controller: "SignupController",
+            resolve: {
+                check: function ($location, UserService) {
+                    if (UserService.isLoggedIn()) {
+                        $location.path('/main');
+                    }
+                }
+            }
         })
         .when("/main", {
             templateUrl: "./templates/main.html",
-            controller: "MainController"
+            controller: "MainController",
+            resolve: {
+                check: function ($location, UserService) {
+                    if (!UserService.isLoggedIn()) {
+                        $location.path('/');
+                    }
+                }
+            }
         })
         .when("/profile", {
             templateUrl: "./templates/profile.html",
@@ -34,6 +48,14 @@ app.config(function ($routeProvider) {
         .when("/singlePost/:postId", {
             templateUrl: "./templates/singlePost.html",
             controller: "SinglePostController"
+        })
+        .when("/messages", {
+            templateUrl: "./templates/messages.html",
+            controller: "MessageController"
+        })
+        .when("/newmessage", {
+            templateUrl: "./templates/newMessage.html",
+            controller: "MessageController"
         })
         .otherwise("/");
 });

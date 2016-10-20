@@ -2,14 +2,14 @@
 
 var app = angular.module('Eventugram');
 
-app.controller('UserProfileController', ['$scope', '$routeParams', 'FollowerService', 'ProfileService', 'UserService', function ($scope, $routeParams, FollowerService, ProfileService, UserService) {
+app.controller('UserProfileController', ['$scope', '$routeParams', '$location', 'FollowerService', 'ProfileService', 'UserService', function ($scope, $routeParams, $location, FollowerService, ProfileService, UserService) {
 
 
     $scope.getUser = function () {
         ProfileService.getOtherUsersProfile($routeParams.userId)
             .then(function (user) {
+                console.log(user)
                 $scope.user = user;
-                $scope.profileImage = user.profileImageRaw || user.profileImage;
             });
     };
     $scope.getUser();
@@ -50,4 +50,8 @@ app.controller('UserProfileController', ['$scope', '$routeParams', 'FollowerServ
                     $scope.button = 'follow';
             })
     };
+
+    $scope.viewPost = function (id) {
+        $location.path('/singlePost/' + id);
+    }
 }]);

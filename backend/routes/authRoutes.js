@@ -7,7 +7,7 @@ var jwt = require('jsonwebtoken');
 
 var config = require('../config');
 
-// SCHEMAS
+// MODELS
 var User = require('../models/userSchema');
 
 authRoute.route('/signup')

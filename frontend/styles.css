@@ -7,9 +7,7 @@ a {
     outline: none;
 }
 
-i,
-md-icon,
-img {
+* {
     outline: none !important;
 }
 
@@ -198,6 +196,11 @@ md-input-container {
     resize: none;
 }
 
+.contact-item {
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+}
+
 md-card-header {
     padding-top: .225em !important;
 }
@@ -212,6 +215,7 @@ md-card-header-text {
 
 .md-subhead {
     text-align: right;
+    font-size: .75em !important;
 }
 
 .md-card-image {
@@ -303,6 +307,14 @@ md-card {
     margin: auto auto;
     text-align: center;
     font-size: 5em;
+}
+
+.md-contact-suggestion img {
+    width: 40px !important;
+    height: 40px !important;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50% !important;
 }
 
 @media (min-width: 968px) {

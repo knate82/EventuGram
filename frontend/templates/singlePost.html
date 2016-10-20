@@ -6,12 +6,12 @@
         <md-card>
             <md-card-header layout>
                 <md-card-avatar flex="20">
-                    <img class="user-thumb" ng-src="{{post.user.profileImageRaw}}" alt="user profile image"/>
+                    <img class="user-thumb" ng-src="{{ post.user.profileImageRaw }}" alt="user profile image"/>
                 </md-card-avatar>
                 <md-card-header-text layout flex="80">
                     <span class="md-title" flex="50">{{post.user.username}}</span>
                     <span class="md-subhead" flex="50"
-                          ng-cloak>{{post.createdAt | howLongAgo | date : 'h'}}</span>
+                          ng-cloak>{{post.createdAt | howLongAgo}}</span>
                 </md-card-header-text>
             </md-card-header>
             <img ng-src="{{post.postImage}}" class="md-card-image" alt="post image">
@@ -25,7 +25,7 @@
                     {{post.caption}}
                 </p>
                 <div layout="column">
-                    <a class="load" ng-show="post.comments.length"
+                    <a class="load" ng-show="post.comments.length > 3"
                        ng-click="post.comment.showAll=!post.comment.showAll">Load All Comments</a>
                     <span ng-repeat="comment in post.comments | limitTo: 3" ng-init="post.comment.showAll = false"
                           ng-if="!post.comment.showAll" class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>

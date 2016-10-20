@@ -3,24 +3,11 @@
 var app = angular.module('Eventugram');
 
 app.service('ProfileService', ['$http', function ($http) {
-    var defaultImage = '/assets/images/DefaultProf.png';
 
     this.getUserProfile = function () {
-        var user = {};
-        return $http.get('/api/user/profile')
+        return $http.get('/api/user/userprofile')
             .then(function (response) {
-                user = response.data;
-
-                if (user.profileImage !== defaultImage) {
-                    return $http.get('/api/user/profileimage/get/' + user._id)
-                        .then(function (response) {
-                            user.profileImage = response.data.profileImage;
-
-                            return user;
-                        })
-                } else {
-                    return user;
-                }
+                return response.data;
             });
     };
 
@@ -32,30 +19,24 @@ app.service('ProfileService', ['$http', function ($http) {
     };
 
     this.getOtherUsersProfile = function (id) {
-        var user = {};
-        return $http.get('/api/user/' + id)
+        return $http.get('/api/user/profile/' + id)
             .then(function (response) {
-                user = response.data;
-                if (user.profileImage) {
-                    if (user.profileImage !== defaultImage) {
-                        return $http.get('/api/user/profileimage/get/' + user._id)
-                            .then(function (response) {
-                                user.profileImage = response.data.profileImage;
-
-                                return user;
-                            })
-                    } else {
-                        return user;
-                    }
-                }
+                return response.data;
             });
     };
 
     this.editUserProfile = function (updatedUser) {
-        return $http.put('/api/user/profile', updatedUser).then(function (response) {
-            console.log(response.data);
+        return $http.put('/api/userprofile/user', updatedUser).then(function (response) {
             return response.data;
         })
+    };
+
+    this.getFollowing = function () {
+        return $http.get('/api/user/following')
+            .then(function (response) {
+                console.log(response)
+                return response.data;
+            })
     };
 
 }]);

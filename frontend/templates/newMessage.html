@@ -1,0 +1,22 @@
+<div class="md-padding" layout="column" flex-xs flex-gt-xs="50"
+     flex-offset-gt-xs="25" flex-gt-sm="40" flex-offset-gt-sm="30">
+    <div flex-gt-sm="50" flex>
+
+        <md-content class="md-padding" layout="column">
+            <md-input-container>
+                <input type="text" placeholder="Send To" ng-model="query" autocomplete="off">
+            </md-input-container>
+
+            <md-list class="fixedRows">
+                <md-subheader class="md-no-sticky">Following</md-subheader>
+                <div ng-hide="newMessage">
+                    
+                </div>
+
+            </md-list>
+            <md-list-item ng-show="newMessage">
+                <text-area>put stuff here</text-area>
+            </md-list-item>
+        </md-content>
+    </div>
+</div>

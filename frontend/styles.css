@@ -122,6 +122,10 @@ md-input-container {
     margin-bottom: .5em;
 }
 
+.md-title {
+    cursor: default;
+}
+
 /*======================================
                Main/Posts
 ======================================*/
@@ -182,6 +186,7 @@ md-input-container {
     object-position: bottom 75%;
 }
 
+.chat,
 .add-comment {
     font-size: 14px;
     box-sizing: border-box;
@@ -196,6 +201,12 @@ md-input-container {
     resize: none;
 }
 
+.chat {
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 0 0 .25em .25em;
+}
+
+.conversation,
 .contact-item {
     border: 1px solid #ddd;
     border-collapse: collapse;
@@ -242,7 +253,7 @@ md-card {
 }
 
 .liked-transparent {
-    color: rgba(255, 0, 0, .5);
+    color: rgba(255, 0, 0, .7);
 }
 
 .like,
@@ -316,6 +327,42 @@ md-card {
     -moz-border-radius: 50%;
     border-radius: 50% !important;
 }
+
+/*======================================
+                 MESSAGES
+======================================*/
+
+.chip {
+    width: 220px;
+    min-height: 30px !important;
+    height: 51.5px !important;
+    background: #ddd;
+    -webkit-border-radius: 25px !important;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+}
+
+.chip .user-thumb {
+    margin-left: -17px;
+}
+
+.chip span {
+    margin-left: 1em;
+}
+
+.chip i {
+    margin-top: .2em;
+    cursor: pointer;
+}
+
+.messages {
+    height: 60vh;
+    overflow: scroll;
+}
+
+/*======================================
+                 MQS
+======================================*/
 
 @media (min-width: 968px) {
     .menu-bar-container {

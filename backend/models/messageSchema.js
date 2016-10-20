@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var messageSchema = new Schema({
-    message: [{
+    message: {
         user: {
             type: Schema.Types.ObjectId,
             ref: 'User'
@@ -18,7 +18,7 @@ var messageSchema = new Schema({
             default: false
         },
         text: String
-    }, {timestamps: true}]
+    }
 }, {timestamps: true});
 
 module.exports = mongoose.model('Message', messageSchema);

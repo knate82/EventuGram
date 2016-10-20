@@ -26,8 +26,8 @@
                 </p>
                 <div layout="column">
                     <a class="load" ng-show="post.comments.length > 3"
-                       ng-click="post.comment.showAll=!post.comment.showAll">Load All Comments</a>
-                    <span ng-repeat="comment in post.comments | limitTo: 3" ng-init="post.comment.showAll = false"
+                       ng-click="post.comment.showAll=!post.comment.showAll">Load Previous Comments</a>
+                    <span ng-repeat="comment in post.comments | limitTo: 3 : -3" ng-init="post.comment.showAll = false"
                           ng-if="!post.comment.showAll" class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>
                     <span ng-repeat="comment in post.comments track by $index" ng-if="post.comment.showAll"
                           class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>
@@ -42,11 +42,4 @@
         </md-card>
 
     </div>
-    <div class="menu-bar-container">
-        <md-button aria-label="menu" class="md-fab md-primary md-hue-2" md-ink-ripple="false"
-                   ng-click="showGridBottomSheet()">
-            <md-icon><i class="material-icons">more_vert</i></md-icon>
-        </md-button>
-    </div>
-
 </div>

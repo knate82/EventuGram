@@ -22,7 +22,7 @@ app.controller('SinglePostController', ['$scope', '$routeParams', 'PostService',
                         },
                         comment: response
                     };
-                    $scope.post.comments.unshift(comment);
+                    $scope.post.comments.push(comment);
                 }
             });
         post.newComment = '';

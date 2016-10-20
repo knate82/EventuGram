@@ -33,12 +33,12 @@
             </md-card-actions>
             <md-card-content>
                 <p>
-                    {{post.caption}}
+                   <small><b>{{post.user.username}}</b> {{post.caption}}</small>
                 </p>
                 <div layout="column">
                     <a class="load" ng-show="post.comments.length > 3"
-                       ng-click="post.comment.showAll=!post.comment.showAll">Load All Comments</a>
-                    <span ng-repeat="comment in post.comments | limitTo: 3" ng-init="post.comment.showAll = false"
+                       ng-click="post.comment.showAll=!post.comment.showAll">Load Previous Comments</a>
+                    <span ng-repeat="comment in post.comments | limitTo: 3 : -3" ng-init="post.comment.showAll = false"
                           ng-if="!post.comment.showAll" class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>
                     <span ng-repeat="comment in post.comments track by $index" ng-if="post.comment.showAll"
                           class="comment"><b>{{comment.user.username}}</b> {{comment.comment}}</span>

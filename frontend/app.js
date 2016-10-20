@@ -58,6 +58,10 @@ app.config(function ($routeProvider) {
             templateUrl: "./templates/newMessage.html",
             controller: "MessageController"
         })
+        .when("/conversation/:id", {
+            templateUrl: "./templates/conversation.html",
+            controller: "ConversationController"
+        })
         .otherwise("/");
 });
 

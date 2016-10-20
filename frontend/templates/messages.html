@@ -4,41 +4,28 @@
 
         <md-toolbar layout="row" class="md-primary md-hue-2">
             <div class="md-toolbar-tools" layout-align="end center">
-                <md-button class="md-fab md-raised" layout-padding ng-href="#/newmessage">
-                    <i class="material-icons">add</i></md-button>
+                <div flex="50">
+                    <h3>Messages</h3>
+                </div>
+                <div flex="50" layout layout-align="end center">
+                    <md-button class="md-fab md-raised" layout-padding ng-href="#/newmessage">
+                        <i class="material-icons">add</i></md-button>
+                </div>
             </div>
         </md-toolbar>
         <md-content>
             <md-list flex>
-                <md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader>
-                <md-list-item class="md-3-line" ng-repeat="item in todos" ng-click="null">
-                    <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}"/>
+                <md-list-item class="md-2-line conversation" ng-repeat="conversation in conversations"
+                              ng-click="viewConversation(conversation._id)">
+                    <img ng-src="{{conversation.users[1].profileImageRaw}}" class="user-thumb md-padding"
+                         alt="conversation between {{conversation.users[1]}} and {{conversation.recipient.user}}"/>
                     <div class="md-list-item-text" layout="column">
-                        <h3>{{ item.who }}</h3>
-                        <h4>{{ item.what }}</h4>
-                        <p>{{ item.notes }}</p>
+                        <h3>{{ conversation.users[1].username }}</h3>
+                        <h4>{{ conversation.messages[conversation.messages.length - 1].message.text }}</h4>
+                        <p>{{ conversation.messages[conversation.messages.length - 1].createdAt | howLongAgo }}</p>
                     </div>
                 </md-list-item>
                 <md-divider></md-divider>
-                <md-subheader class="md-no-sticky">2 line item</md-subheader>
-
-
-                <md-divider></md-divider>
-                <md-subheader class="md-no-sticky">Classes</md-subheader>
-                <md-list-item class="md-2-line" ng-repeat="phone in phones">
-                    <md-icon md-svg-icon="{{phone.options.icon}}" ng-if="phone.options.icon"
-                             ng-class="{'md-avatar-icon': phone.options.avatarIcon}"></md-icon>
-                    <img ng-src="{{phone.options.face}}?25" class="md-avatar" alt="{{phone.options.face}}"
-                         ng-if="phone.options.face"/>
-                    <div class="md-list-item-text" ng-class="{'md-offset': phone.options.offset }">
-                        <h3> {{ phone.number }} </h3>
-                        <p> {{ phone.type }} </p>
-                    </div>
-                    <md-button class="md-secondary md-icon-button" ng-click="doSecondaryAction($event)"
-                               ng-if="phone.options.actionIcon" aria-label="call">
-                        <md-icon md-svg-icon="{{phone.options.actionIcon}}"></md-icon>
-                    </md-button>
-                </md-list-item>
             </md-list>
         </md-content>
     </div>

@@ -2,21 +2,47 @@
      flex-offset-gt-xs="25" flex-gt-sm="40" flex-offset-gt-sm="30">
     <div flex-gt-sm="50" flex>
 
-        <md-content class="md-padding" layout="column">
-            <md-input-container>
-                <input type="text" placeholder="Send To" ng-model="query" autocomplete="off">
-            </md-input-container>
+        <md-content class="md-padding" layout="column" ng-hide="newMessage">
+            <div layout flex="100" flex-gt-sm="60">
+                <md-input-container ng-hide="newMessage">
+                    <input type="text" placeholder="Send To" ng-model="query" autocomplete="off">
+                </md-input-container>
+            </div>
 
             <md-list class="fixedRows">
                 <md-subheader class="md-no-sticky">Following</md-subheader>
-                <div ng-hide="newMessage">
-                    
-                </div>
+                <md-list-item class="md-2-line contact-item selected"
+                              ng-repeat="user in allUsers | filter : {username: query}"
+                              ng-click="selectUser(user)">
+                    <img ng-src="{{user.profileImageRaw}}" class="user-thumb" alt="{{user.username}}"/>
+                    <div class="md-list-item-text compact" layout-padding>
+                        <h3>{{user.username}}</h3>
+                    </div>
+                </md-list-item>
 
             </md-list>
-            <md-list-item ng-show="newMessage">
-                <text-area>put stuff here</text-area>
-            </md-list-item>
         </md-content>
+        <div ng-show="newMessage">
+            <md-content layout="column">
+                <p><b>To:</b></p>
+                <md-list-item class="md-2-line contact-item chip" layout>
+                    <img ng-src="{{recipient.profileImageRaw}}" class="user-thumb" alt="{{recipient.username}}"/>
+                    <div class="md-list-item-text compact">
+                        <b><span>{{recipient.username}}</span></b>
+                    </div>
+                    <span><i class="material-icons" layout-padding>close</i></span>
+                </md-list-item>
+            </md-content>
+            <md-divider layout-margin></md-divider>
+            <div layout="column" flex="100" flex-gt-sm="60" layout-padding>
+                <form name="messageForm" ng-submit="sendMessage(recipient._id)">
+                    <md-input-container>
+                        <label>message</label>
+                        <textarea ng-model="messageObj.message.text" ng-minlength="2" required></textarea>
+                    </md-input-container>
+                    <md-button class="md-raised md-accent md-hue-1" type="submit" ng-disabled="messageForm.$invalid">send message</md-button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>

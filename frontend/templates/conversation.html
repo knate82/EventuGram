@@ -1,0 +1,29 @@
+<div class="md-padding" layout="column" flex-xs flex-gt-xs="50"
+     flex-offset-gt-xs="25" flex-gt-sm="40" flex-offset-gt-sm="30">
+    <div flex-gt-sm="50" flex>
+
+        <md-toolbar layout="row" class="md-primary md-hue-2">
+            <div class="md-toolbar-tools" layout-align="start center">
+                <small><h4>{{recipient.username}}</h4></small>
+            </div>
+        </md-toolbar>
+        <md-content class="messages">
+            <md-list flex>
+                <md-list-item class="md-3-line conversation" ng-repeat="singleMessage in conversation.messages">
+                    <img ng-src="{{singleMessage.message.user.profileImageRaw}}" class="user-thumb md-padding"
+                         alt="conversation between {{singleMessage.message.user.username}} and {{singleMessage.message.username}}"/>
+                    <div class="md-list-item-text" layout="column">
+                        <h4>{{ singleMessage.message.text }}</h4>
+                        <p>{{ singleMessage.createdAt | howLongAgo }}</p>
+                    </div>
+                </md-list-item>
+                <div>
+                    <form name="newMessageForm" ng-submit="sendNewMessage(recipient._id)">
+                        <input type="text" class="chat" ng-model="messageObj.message.text" placeholder="message" id="sendMessage" autofocus>
+                        <md-button type="submit" class="md-raised md-accent md-hue-2">send</md-button>
+                    </form>
+                </div>
+            </md-list>
+        </md-content>
+    </div>
+</div>

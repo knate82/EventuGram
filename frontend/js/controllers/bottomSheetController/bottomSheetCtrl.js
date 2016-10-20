@@ -10,6 +10,7 @@ app.controller('BottomSheetController', ['$scope', '$mdBottomSheet', '$location'
             icon: 'inbox',
             use: function() {
                 $location.path('/messages');
+                $mdBottomSheet.hide();
             }
         },
         {
@@ -25,9 +26,4 @@ app.controller('BottomSheetController', ['$scope', '$mdBottomSheet', '$location'
             icon: 'notifications'
         }
     ];
-
-    $scope.listItemClick = function ($index) {
-        var clickedItem = $scope.items[$index];
-        $mdBottomSheet.hide(clickedItem);
-    };
 }]);

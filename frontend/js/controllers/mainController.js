@@ -32,7 +32,7 @@ app.controller('MainController', ['$scope', '$rootScope', '$mdBottomSheet', '$ti
                         },
                         comment: response
                     };
-                    $scope.posts[index].comments.unshift(comment);
+                    $scope.posts[index].comments.push(comment);
                 }
             });
         post.newComment = '';

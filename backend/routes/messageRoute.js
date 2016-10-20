@@ -23,27 +23,58 @@ messageRoute.route('/')
     })
     .post(function (req, res) {
         var newMessage = new Message(req.body);
-        newMessage.user = req.user;
 
+        newMessage.message.user = req.user._id;
         newMessage.save();
 
-        if (err) return res.status(500).send(err);
-
-        Conversation.findOne({users: {$in: [newMessage.user, newMessage.recipient]}}, function (err, conversation) {
+        Conversation.findOne({users: {$in: [newMessage.message.user, newMessage.message.recipient]}}, function (err, conversation) {
             if (err) return res.status(500).send(err);
-
+            console.log(conversation)
             if (!conversation) {
                 var conversationObj = {};
-                conversationObj.users = [newMessage.user._id, newMessage._id];
+                conversationObj.users = [newMessage.message.user, newMessage.message.recipient];
                 var newConversation = new Conversation(conversationObj);
-                newConversation.messages.push(newMessage.text);
+                newConversation.messages.push(newMessage);
                 newConversation.save();
+                return res.send(newConversation);
             } else if (conversation) {
                 conversation.messages.push(newMessage);
                 conversation.save();
             }
+            res.send(conversation);
         });
-        res.send(newMessage);
+    });
+
+messageRoute.route('/conversations/:id')
+    .get(function (req, res) {
+
+        Conversation.findById(req.params.id)
+            .populate('users', 'username profileImageRaw')
+            .populate({
+                path: 'messages',
+                model: 'Message',
+                populate: {
+                    path: 'message.user message.recipient',
+                    select: 'username profileImageRaw'
+                }
+            })
+            .exec(function (err, conversation) {
+                if (err) return res.status(500).send(err);
+
+                res.send(conversation);
+            })
+    });
+
+messageRoute.route('/conversations')
+    .get(function (req, res) {
+        Conversation.find({users: {$in: [req.user._id]}})
+            .populate('users', 'username profileImageRaw')
+            .populate('messages')
+            .exec(function (err, conversations) {
+                if (err) return res.status(500).send(err);
+
+                res.send(conversations);
+            })
     });
 
 module.exports = messageRoute;

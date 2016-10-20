@@ -139,6 +139,7 @@ userRoute.route('/following')
         var user = req.user._id;
         User.findById(user)
             .populate('following', 'username profileImageRaw')
+            .populate('followers', 'username profileImageRaw')
             .select('username profileImageRaw following')
             .exec(function (err, user) {
                 if (err) return res.status(500).send(err);

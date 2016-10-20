@@ -39,7 +39,8 @@ app.config(function ($routeProvider) {
             controller: "ProfileController"
         })
         .when("/friends", {
-            templateUrl: "./templates/friends.html"
+            templateUrl: "./templates/friends.html",
+            controller: "FriendsController"
         })
         .when("/user/:userId", {
             templateUrl: "./templates/friendProfile.html",

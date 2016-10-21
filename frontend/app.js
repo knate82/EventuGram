@@ -73,8 +73,9 @@ app.config(['$mdThemingProvider', function ($mdThemingProvider) {
             'hue-2': '400',
             'hue-3': 'A100'
         })
-        .accentPalette('indigo', {
+        .accentPalette('teal', {
             'default': '400',
-            'hue-1': '600'
+            'hue-1': '600',
+            'hue-2': '300'
         });
 }]);

@@ -25,6 +25,13 @@ app.service('PostService', ['$http', function ($http) {
     };
 
     this.toggleLike = function (id) {
-        return $http.put('/api/post' + id + '/like/');
-    }
+        return $http.put('/api/post/' + id + '/like/');
+    };
+
+    this.deletePost = function(id) {
+        return $http.delete('/api/post/delete/' + id)
+            .then(function(response) {
+                return response.data;
+            })
+    };
 }]);

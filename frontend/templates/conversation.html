@@ -2,28 +2,47 @@
      flex-offset-gt-xs="25" flex-gt-sm="40" flex-offset-gt-sm="30">
     <div flex-gt-sm="50" flex>
 
-        <md-toolbar layout="row" class="md-primary md-hue-2">
-            <div class="md-toolbar-tools" layout-align="start center">
-                <small><h4>{{recipient.username}}</h4></small>
+        <md-toolbar layout="row" class="md-accent md-hue-2">
+            <div layout layout-align="center center" layout-margin>
+                <md-button href="#/messages"
+                           aria-label="back"
+                           class="md-icon-button launch" >
+                    <md-icon><i class="material-icons title">arrow_back</i></md-icon>
+                </md-button>
+            </div>
+            <div class="md-toolbar-tools" layout-align="end center">
+                <div layout>
+                    <p class="title">{{recipient.username}}</p>
+                </div>
             </div>
         </md-toolbar>
-        <md-content class="messages">
+        <md-content class="messages" id="chatBox">
             <md-list flex>
-                <md-list-item class="md-3-line conversation" ng-repeat="singleMessage in conversation.messages">
+                <md-list-item class="md-3-line conversation left" ng-repeat="singleMessage in conversation.messages"
+                              ng-class="{right: singleMessage.message.user._id === userService.getUserId()}">
                     <img ng-src="{{singleMessage.message.user.profileImageRaw}}" class="user-thumb md-padding"
-                         alt="conversation between {{singleMessage.message.user.username}} and {{singleMessage.message.username}}"/>
-                    <div class="md-list-item-text" layout="column">
-                        <h4>{{ singleMessage.message.text }}</h4>
-                        <p>{{ singleMessage.createdAt | howLongAgo }}</p>
+                         alt="conversation between {{singleMessage.message.user.username}} and {{singleMessage.message.username}}"
+                         ng-class="{'flex-order-1': singleMessage.message.user._id === userService.getUserId()}"/>
+                    <div class="md-list-item-text" layout="column"
+                         ng-class="{'layout-align-center-end': singleMessage.message.user._id === userService.getUserId()}">
+                        <p class="small">{{singleMessage.message.user.username}}</p>
+                        <div class="chat-bubble">
+                            <p>{{ singleMessage.message.text }}</p>
+                        </div>
+                        <p class="small">{{ singleMessage.createdAt | howLongAgo : true }}</p>
                     </div>
                 </md-list-item>
-                <div>
-                    <form name="newMessageForm" ng-submit="sendNewMessage(recipient._id)">
-                        <input type="text" class="chat" ng-model="messageObj.message.text" placeholder="message" id="sendMessage" autofocus>
-                        <md-button type="submit" class="md-raised md-accent md-hue-2">send</md-button>
-                    </form>
-                </div>
+
             </md-list>
         </md-content>
+        <md-toolbar layout="row" layout-align="center center" class="md-accent md-hue-2">
+
+            <form name="newMessageForm" ng-submit="sendNewMessage(recipient._id)" layout flex="95">
+                <input type="text" class="chat" ng-model="messageObj.message.text" placeholder="message"
+                       autofocus>
+                <md-button type="submit" class="md-raised md-primary md-hue-3 message-button">send</md-button>
+            </form>
+
+        </md-toolbar>
     </div>
 </div>

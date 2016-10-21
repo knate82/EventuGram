@@ -1,19 +1,25 @@
 <md-dialog aria-label="Change profile picture">
     <form name="newPostForm" ng-cloak>
-        <md-toolbar layout-padding layout  layout-align="center center" class="md-primary md-hue-3">
-            <img ngf-src="newPost.postPicture" class="post-preview">
+        <md-toolbar layout-padding layout layout-align="center center" class="md-primary md-hue-3">
+            <div class="image-holder">
+                <img ngf-src="newPost.postPicture" class="post-preview">
+            </div>
         </md-toolbar>
         <md-dialog-actions layout="row">
-            <md-button class="button" ngf-select ng-model="newPost.postPicture" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'"
+            <md-button class="button" ngf-select ng-model="newPost.postPicture" name="file" ngf-pattern="'image/*'"
+                       ngf-accept="'image/*'"
                        ngf-max-size="20MB" ng-hide="newPost.postPicture"
                        ngf-min-height="100" ngf-resize="{width: 896, height: 504}">Choose Image
             </md-button>
-            <md-button type="submit" ng-click="uploadImage(newPost.postPicture)" ng-show="newPost.postPicture">Continue</md-button>
+            <md-button type="submit" ng-click="uploadImage(newPost.postPicture)" ng-show="newPost.postPicture">
+                Continue
+            </md-button>
             <md-button type="submit" ng-click="closeDialog()">Cancel</md-button>
         </md-dialog-actions>
         <md-input-container ng-show="newPost.postPicture">
             <label for="postCaption">add a caption</label>
-            <textarea type="text" id="postCaption" name="caption" ng-model="newPost.caption" ng-maxlength="200"></textarea>
+            <textarea type="text" id="postCaption" name="caption" ng-model="newPost.caption"
+                      ng-maxlength="200"></textarea>
             <div ng-messages="newPostForm.caption.$error" style="color: maroon" role="alert">
                 <div ng-message="maxlength">your caption is too long</div>
             </div>

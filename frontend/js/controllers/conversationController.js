@@ -2,12 +2,14 @@
 
 var app = angular.module('Eventugram');
 
-app.controller('ConversationController', ['$scope', '$routeParams', '$timeout', 'MessageService', 'UserService', function ($scope, $routeParams, $timeout,MessageService, UserService) {
+app.controller('ConversationController', ['$scope', '$routeParams', '$timeout', 'MessageService', 'UserService', function ($scope, $routeParams, $timeout, MessageService, UserService) {
 
     function scrollToBottom() {
-        document.getElementById('sendMessage').scrollIntoView()
+        var chatBox = document.getElementById('chatBox');
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
-    $timeout(scrollToBottom, 200);
+
+    $timeout(scrollToBottom, 100);
 
     MessageService.getOneConversation($routeParams.id)
         .then(function (response) {
@@ -21,13 +23,13 @@ app.controller('ConversationController', ['$scope', '$routeParams', '$timeout', 
     $scope.sendNewMessage = function (userId) {
         $scope.messageObj.message.recipient = userId;
         $scope.messageObj.message.user = $scope.user;
-        $scope.conversation.messages.push($scope.messageObj);
+        var message = angular.copy($scope.messageObj);
+        $scope.conversation.messages.push(message);
+        newMessageForm.reset();
 
-        console.log($scope.messageObj);
         MessageService.sendNewMessage($scope.messageObj)
             .then(function (response) {
-                console.log(response);
+                scrollToBottom();
             });
     };
-
 }]);

@@ -116,4 +116,19 @@ postRoute.route('/:postId/like')
         })
     });
 
+postRoute.route('/delete/:id')
+    .delete(function(req, res) {
+        Post.findByIdAndRemove(req.params.id, function(err, post) {
+            if (err) return res.status(500).send(err);
+
+            User.findById(req.user._id, function(err, foundUser) {
+               foundUser.posts.remove(req.params.id);
+                foundUser.save(function(err) {
+                    if (err) return res.status(500).send(err);
+                })
+            });
+            res.send(post);
+        });
+    });
+
 module.exports = postRoute;

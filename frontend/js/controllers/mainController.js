@@ -61,5 +61,18 @@ app.controller('MainController', ['$scope', '$rootScope', '$mdBottomSheet', '$ti
             return true;
         else
             return false;
-    }
+    };
+
+    $scope.options = [
+        {
+            name: 'delete',
+            use: function (id) {
+                PostService.deletePost(id)
+                    .then(function (response) {
+                        getPosts();
+                    })
+            }
+        }
+    ];
+
 }]);

@@ -6,6 +6,6 @@ angular.module('Eventugram')
       $scope.user = response;
       console.log($scope.user);
     })
-  }
+  };
   $scope.getFriends();
-}])
+}]);

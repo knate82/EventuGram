@@ -25,7 +25,10 @@ userRoute.route('/query')
 userRoute.route('/userprofile')
     .get(function (req, res) {
         User.findById(req.user)
-            .populate('posts')
+            .populate({
+                path: 'posts',
+                options: {sort: {'createdAt': -1}}
+            })
             .exec(function (err, user) {
                 res.send(user.withoutProps('password'));
             });
@@ -83,7 +86,10 @@ userRoute.route('/profile/:id')
             return res.send({message: 'id is undefined'});
 
         User.findById(req.params.id)
-            .populate('posts')
+            .populate({
+                path: 'posts',
+                options: {sort: {'createdAt': -1}}
+            })
             .exec(function (err, user) {
                 if (err) return res.status(500).send(err);
 

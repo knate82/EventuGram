@@ -27,9 +27,9 @@ messageRoute.route('/')
         newMessage.message.user = req.user._id;
         newMessage.save();
 
-        Conversation.findOne({users: {$in: [newMessage.message.user, newMessage.message.recipient]}}, function (err, conversation) {
+        Conversation.findOne({$or: [{users: [newMessage.message.user, newMessage.message.recipient]}, {users: [newMessage.message.recipient, newMessage.message.user]}]}, function (err, conversation) {
             if (err) return res.status(500).send(err);
-            console.log(conversation)
+            console.log(conversation.users);
             if (!conversation) {
                 var conversationObj = {};
                 conversationObj.users = [newMessage.message.user, newMessage.message.recipient];
